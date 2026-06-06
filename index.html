@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --n:#0f1c2e;--nm:#1a2f4a;--nl:#243d5c;
+  --a:#e8a030;--al:#f5c96a;--ad:#7a5010;
+  --ic:#e8eef5;--im:#d0dae6;--il:#f4f7fa;
+  --gr:#2d6a4f;--grl:#d8f3dc;
+  --re:#c0392b;--rl:#fde8e6;
+  --bd:#c8d5e3;--bl:#e2eaf3;
+  --ts:#7a8fa6;--tm:#3a4f66;
+  --wh:#ffffff;
+  --fh:'Syne',sans-serif;
+  --fb:'IBM Plex Sans',sans-serif;
+  --fm:'DM Mono',monospace;
+  --r:6px;
+}
+html{font-size:13px}
+body{background:#0a1520;font-family:var(--fb);color:var(--n);min-height:100vh;margin:0}
+.app{display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--n);border-bottom:2px solid var(--a);padding:0 20px;display:flex;align-items:center;gap:16px;height:50px;position:sticky;top:0;z-index:100;flex-shrink:0}
+.brand{font-family:var(--fh);font-weight:800;font-size:1.05rem;color:var(--wh);display:flex;align-items:center;gap:8px}
+.brand span{color:var(--a)}
+.topbar-badge{font-family:var(--fm);font-size:.65rem;background:rgba(232,160,48,.15);color:var(--al);border:1px solid rgba(232,160,48,.3);padding:2px 8px;border-radius:3px;letter-spacing:.4px;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.topbar-info{font-family:var(--fm);font-size:.65rem;color:var(--ts);letter-spacing:.3px}
+.nav{display:flex;gap:2px;background:rgba(0,0,0,.3);padding:4px 20px 0;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:50px;z-index:99;flex-shrink:0}
+.ntab{font-family:var(--fh);font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:6px 14px;border:none;background:none;color:var(--ts);cursor:pointer;border-radius:4px 4px 0 0;transition:all .18s;display:flex;align-items:center;gap:6px}
+.ntab .n{font-family:var(--fm);font-size:.6rem;width:16px;height:16px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.ntab:hover{color:var(--ic)}
+.ntab.on{color:var(--a);background:rgba(232,160,48,.1);border-bottom:2px solid var(--a)}
+.ntab.on .n{background:var(--a);color:var(--n)}
+.main{background:var(--il);padding:20px;flex:1}
+.panel{display:none}
+.panel.on{display:block;animation:fi .2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.sh{display:flex;align-items:flex-end;gap:12px;margin-bottom:16px}
+.st{font-family:var(--fh);font-size:1.2rem;font-weight:700;color:var(--n);letter-spacing:-.4px}
+.ss{font-size:.72rem;color:var(--ts);font-family:var(--fm);margin-bottom:1px}
+.ml{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r);border:none;cursor:pointer;font-family:var(--fb);font-size:.75rem;font-weight:500;transition:all .15s}
+.bp{background:var(--a);color:var(--n)}.bp:hover{background:var(--al);transform:translateY(-1px)}
+.bg{background:transparent;border:1.5px solid var(--bd);color:var(--tm)}.bg:hover{border-color:var(--nl);color:var(--n)}
+.bd2{background:transparent;border:1.5px solid #e0b0ae;color:var(--re);padding:4px 8px;font-size:.7rem}.bd2:hover{background:var(--rl)}
+.bsm{padding:5px 10px;font-size:.7rem}
+.bgreen{background:var(--gr);color:#fff;border:none}.bgreen:hover{background:#245a41;transform:translateY(-1px)}
+.card{background:var(--wh);border-radius:10px;border:1px solid var(--bl);box-shadow:0 2px 10px rgba(15,28,46,.08);overflow:hidden;margin-bottom:16px}
+.ch{background:var(--n);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.ct{font-family:var(--fh);font-size:.8rem;font-weight:700;color:var(--wh);letter-spacing:.2px;display:flex;align-items:center;gap:7px}
+.cbadge{font-family:var(--fm);font-size:.6rem;background:rgba(255,255,255,.15);padding:2px 6px;border-radius:3px;font-weight:400}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:860px){.g2{grid-template-columns:1fr}}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+thead th{background:var(--nm);color:var(--ic);font-family:var(--fm);font-size:.65rem;font-weight:500;letter-spacing:.4px;padding:8px 10px;text-align:center;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody tr:nth-child(even){background:var(--il)}
+tbody tr:hover{background:#e8f0f8}
+tbody td{padding:7px 10px;border-bottom:1px solid var(--bl);border-right:1px solid var(--bl);vertical-align:middle;text-align:center}
+tbody td:first-child{text-align:left}
+.tl{font-weight:600;color:var(--n);white-space:nowrap}
+.ts2{font-family:var(--fm);font-size:.68rem;color:var(--ts);font-style:italic}
+input[type=text],input[type=number],select,textarea{border:1.5px solid var(--bd);border-radius:4px;padding:4px 7px;font-family:var(--fm);font-size:.75rem;color:var(--n);background:var(--wh);outline:none;transition:border-color .12s,box-shadow .12s;width:100%}
+input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(232,160,48,.12)}
+input[type=number]{text-align:center}
+textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;line-height:1.5}
+.itam{width:50px}.itipo{width:150px}.icor{width:170px}
+.ifolhas{width:58px;background:#fffbf0;border-color:#e8c880;color:var(--ad);font-weight:500}
+.ifolhas:focus{border-color:var(--a)}
+.ifield{width:100%;margin-bottom:0}
+.flabel{font-family:var(--fm);font-size:.68rem;color:var(--tm);margin-bottom:3px;display:block;letter-spacing:.2px}
+.fgroup{display:flex;flex-direction:column;gap:3px}
+.ctabs{display:flex;gap:5px;margin-bottom:0;flex-wrap:wrap}
+.ctab{font-family:var(--fh);font-size:.72rem;font-weight:700;padding:7px 18px;border-radius:6px 6px 0 0;border:1.5px solid var(--bd);border-bottom:none;background:var(--wh);color:var(--ts);cursor:pointer;transition:all .15s;letter-spacing:.2px}
+.ctab:hover{color:var(--n);border-color:var(--nl)}
+.ctab.on{background:var(--n);color:var(--a);border-color:var(--n)}
+.cpanel{display:none}.cpanel.on{display:block}
+.rgrade td{background:var(--im)!important}
+.tcalc{font-family:var(--fm);font-weight:500;color:var(--n);background:rgba(15,28,46,.03)}
+.ttotal{font-family:var(--fm);font-weight:700;color:var(--n);background:var(--im)!important}
+.tsub td{background:var(--nl)!important;border-color:var(--nm)!important}
+.tsub:hover td{background:var(--nm)!important}
+.tsub .ts3{font-family:var(--fm);font-weight:700;font-size:.78rem;color:var(--wh)}
+.rhead td{background:var(--n)!important;color:var(--a)!important;font-family:var(--fh);font-size:.74rem;font-weight:700;text-align:left}
+.rgrand td{background:var(--a)!important;color:var(--n)!important;font-family:var(--fm);font-weight:700;font-size:.8rem}
+.rgrand:hover td{background:var(--al)!important}
+.rcor td{background:var(--grl)!important}
+.rcor:hover td{background:#c6e8cf!important}
+.tgr{color:var(--gr);font-weight:700;font-family:var(--fm)}
+.empty td{color:var(--ts);font-style:italic;font-size:.72rem;font-family:var(--fm)}
+.db-grid{display:grid;grid-template-columns:290px 1fr;gap:16px;align-items:start}
+@media(max-width:800px){.db-grid{grid-template-columns:1fr}}
+.op-list{max-height:460px;overflow-y:auto}
+.op-item{padding:10px 14px;border-bottom:1px solid var(--bl);cursor:pointer;transition:background .12s;display:flex;align-items:center;justify-content:space-between}
+.op-item:hover{background:var(--il)}
+.op-item.on{background:rgba(232,160,48,.1);border-left:3px solid var(--a)}
+.op-name{font-family:var(--fh);font-size:.8rem;font-weight:700;color:var(--n)}
+.op-meta{font-family:var(--fm);font-size:.65rem;color:var(--ts);margin-top:2px}
+.op-badge{font-family:var(--fm);font-size:.6rem;background:var(--il);border:1px solid var(--bd);padding:2px 6px;border-radius:3px;color:var(--tm)}
+.detail-card{background:var(--wh);border-radius:10px;border:1px solid var(--bl);padding:16px}
+.detail-label{font-family:var(--fm);font-size:.65rem;color:var(--ts);letter-spacing:.4px;text-transform:uppercase;margin-bottom:3px}
+.detail-val{font-family:var(--fb);font-size:.85rem;font-weight:500;color:var(--n)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--fm);font-size:.62rem;padding:2px 8px;border-radius:3px;font-weight:500}
+.cha{background:rgba(232,160,48,.15);color:var(--ad);border:1px solid rgba(232,160,48,.3)}
+.chn{background:rgba(15,28,46,.1);color:var(--n);border:1px solid var(--bd)}
+.chip-grade{background:rgba(45,106,79,.12);color:var(--gr);border:1px solid rgba(45,106,79,.3);font-size:.65rem;padding:3px 10px;border-radius:4px;font-family:var(--fm)}
+.grade-type-btns{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.gtbtn{font-family:var(--fh);font-size:.72rem;font-weight:700;padding:6px 16px;border-radius:5px;border:1.5px solid var(--bd);background:var(--wh);color:var(--ts);cursor:pointer;transition:all .15s;letter-spacing:.2px}
+.gtbtn:hover{border-color:var(--nl);color:var(--n)}
+.gtbtn.on{background:var(--n);color:var(--a);border-color:var(--n)}
+.grade-info{font-family:var(--fm);font-size:.68rem;color:var(--tm);background:var(--il);border:1px solid var(--bl);border-radius:4px;padding:6px 10px;margin-bottom:12px;letter-spacing:.2px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.frow1{margin-bottom:12px}
+@media(max-width:700px){.frow3,.frow2{grid-template-columns:1fr}}
+/* DB toolbar */
+.db-toolbar{display:flex;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bl);background:var(--il);flex-wrap:wrap}
+/* import hidden input */
+#import-input{display:none}
+
+
+
+  .res-header-top{background:var(--n)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:8pt 12pt}
+  .res-header-fields{grid-template-columns:repeat(5,1fr)!important}
+  .res-hfield{padding:6pt 10pt}
+}
+
+
+
+
+/* ── UNIDADE TOGGLE ────────────────────────────────────────── */
+.unidade-toggle{display:flex;border-radius:6px;overflow:hidden;border:1.5px solid var(--bd);background:var(--wh)}
+.utbtn{flex:1;padding:5px 12px;border:none;background:none;cursor:pointer;font-family:var(--fb);font-size:.75rem;font-weight:500;color:var(--ts);transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;justify-content:center}
+.utbtn:first-child{border-right:1.5px solid var(--bd)}
+.utbtn:hover{background:var(--il);color:var(--n)}
+.utbtn.on{background:var(--n);color:var(--a);font-weight:700}
+.utbtn .uticon{font-size:.85rem}
+
+
+/* ── RESUMO HEADER CARD ────────────────────────────────────── */
+.res-header-card{
+  background:var(--wh);border-radius:10px;border:1px solid var(--bl);
+  box-shadow:0 2px 14px rgba(15,28,46,.10);overflow:hidden;margin-bottom:18px;
+}
+.res-header-top{
+  background:var(--n);padding:12px 20px;display:flex;align-items:center;gap:16px;
+}
+.res-header-brand{
+  display:flex;align-items:center;gap:8px;font-family:var(--fh);font-size:.88rem;
+  color:rgba(255,255,255,.55);white-space:nowrap;
+}
+.res-header-brand b{color:var(--a)}
+.res-header-title{
+  font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--wh);
+  letter-spacing:-.3px;flex:1;
+}
+.res-header-date{
+  font-family:var(--fm);font-size:.65rem;color:var(--ts);white-space:nowrap;
+}
+.res-header-fields{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+}
+@media(max-width:900px){.res-header-fields{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.res-header-fields{grid-template-columns:repeat(2,1fr)}}
+.res-hfield{
+  padding:10px 16px;border-right:1px solid var(--bl);border-bottom:1px solid var(--bl);
+  display:flex;flex-direction:column;gap:3px;transition:background .12s;
+}
+.res-hfield:hover{background:var(--il)}
+.res-hfield:nth-child(5n){border-right:none}
+.res-hfield-hl{background:rgba(232,160,48,.07)}
+.res-hfield-hl .res-hfield-val{color:var(--n);font-weight:700;font-size:.9rem}
+.res-hfield-label{
+  font-family:var(--fm);font-size:.6rem;color:var(--ts);
+  text-transform:uppercase;letter-spacing:.4px;
+}
+.res-hfield-val{font-family:var(--fb);font-size:.82rem;font-weight:500;color:var(--n)}
+.res-hfield-val.mono{font-family:var(--fm);color:var(--tm)}
+@media print{
+  .res-header-card{border:1px solid #ccc!important;box-shadow:none!important;margin-bottom:10pt}
+  .res-header-top{background:var(--n)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:8pt 12pt}
+  .res-header-fields{grid-template-columns:repeat(5,1fr)!important}
+  .res-hfield{padding:6pt 10pt}
+}
+
+/* ── MARCAÇÃO SELECT ──────────────────────────────────────── */
+.marcacao-sel{width:54px!important;text-align:center;font-family:var(--fm)!important;font-weight:700!important;color:var(--n)!important;background:rgba(232,160,48,.08)!important;border-color:#e8c880!important}
+.marcacao-sel:focus{border-color:var(--a)!important}
+
+/* ── CATÁLOGO GLOBAL ───────────────────────────────────────── */
+.cat-grid{display:grid;grid-template-columns:320px 1fr;gap:16px;align-items:start}
+@media(max-width:840px){.cat-grid{grid-template-columns:1fr}}
+.tipo-list{max-height:520px;overflow-y:auto}
+.tipo-item{padding:9px 14px;border-bottom:1px solid var(--bl);cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .12s;gap:8px}
+.tipo-item:hover{background:var(--il)}
+.tipo-item.on{background:rgba(232,160,48,.1);border-left:3px solid var(--a)}
+.tipo-name{font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--n)}
+.tipo-count{font-family:var(--fm);font-size:.65rem;background:var(--il);border:1px solid var(--bd);padding:2px 7px;border-radius:3px;color:var(--tm);white-space:nowrap}
+.cor-chips{display:flex;flex-wrap:wrap;gap:6px;padding:14px 16px}
+.cor-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:.75rem;padding:5px 10px;border-radius:5px;background:var(--il);border:1.5px solid var(--bd);color:var(--n);transition:border-color .12s}
+.cor-chip:hover{border-color:var(--a)}
+.cor-chip .rm{cursor:pointer;color:var(--ts);font-size:.8rem;line-height:1;padding:0 2px;transition:color .12s}
+.cor-chip .rm:hover{color:var(--re)}
+.add-cor-row{display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--bl);background:var(--il)}
+.add-tipo-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--bl);background:var(--il)}
+.cat-empty{padding:32px 16px;text-align:center;color:var(--ts);font-family:var(--fm);font-size:.75rem;font-style:italic}
+.cat-info{background:rgba(45,106,79,.08);border:1px solid rgba(45,106,79,.25);border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px;font-family:var(--fm);font-size:.7rem;color:var(--tm);line-height:1.5}
+.import-btn-area{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ── PRINT STYLES ─────────────────────────── */
+@media print{
+  body{background:#fff!important;font-size:11pt;color:#000}
+  .app,.main{background:#fff!important}
+  .topbar,.nav,.sh .ml,#panel-db,#panel-cad,#panel-mon,.ctabs,.cpanel,
+  button,.btn,.ntab,.chip,.chip-grade{display:none!important}
+  .panel{display:none!important}
+  #panel-res{display:block!important;padding:0}
+  .sh{margin-bottom:12pt}
+  .st{font-size:16pt;color:#000}
+  .ss{font-size:9pt;color:#555}
+  .card{box-shadow:none!important;border:1px solid #ccc!important;border-radius:0!important;margin-bottom:14pt;page-break-inside:avoid}
+  .ch{background:#1a2f4a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ct{color:#fff!important}
+  thead th{background:#243d5c!important;color:#e8eef5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:8pt;padding:5pt 7pt}
+  tbody td{padding:5pt 7pt;font-size:9pt}
+  .tcalc,.ttotal{font-family:monospace}
+  .rhead td{background:#0f1c2e!important;color:#e8a030!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rgrand td{background:#e8a030!important;color:#0f1c2e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rcor td{background:#d8f3dc!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tw{overflow:visible!important}
+  table{page-break-inside:auto}
+  tr{page-break-inside:avoid}
+  @page{margin:1.5cm;size:A4 landscape}
+}
+
+#toast{position:fixed;bottom:20px;right:20px;background:var(--n);color:var(--wh);padding:9px 16px;border-radius:6px;font-size:.78rem;border-left:3px solid var(--a);box-shadow:0 4px 20px rgba(15,28,46,.25);transform:translateY(16px);opacity:0;transition:all .22s;z-index:999;pointer-events:none;font-family:var(--fb)}
+#toast.on{transform:none;opacity:1}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="topbar">
+  <div class="brand">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="2" fill="#e8a030"/><rect x="11" y="1" width="8" height="8" rx="2" fill="rgba(232,160,48,.4)"/><rect x="1" y="11" width="8" height="8" rx="2" fill="rgba(232,160,48,.4)"/><rect x="11" y="11" width="8" height="8" rx="2" fill="#e8a030"/></svg>
+    PROVEST <span>CORTE</span>
+  </div>
+  <div class="topbar-badge" id="tb-op">SEM OP ATIVA</div>
+  <div class="topbar-right">
+    <div class="topbar-info" id="tb-total">—</div>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="ntab" onclick="goTab('cat')"><span class="n">★</span>Catálogo</button>
+  <button class="ntab on" onclick="goTab('db')"><span class="n">0</span>Histórico</button>
+  <button class="ntab" onclick="goTab('cad')"><span class="n">1</span>Cadastro</button>
+  <button class="ntab" onclick="goTab('mon')"><span class="n">2</span>Montagem</button>
+  <button class="ntab" onclick="goTab('res')"><span class="n">3</span>Resumo</button>
+</nav>
+
+<main class="main">
+
+<!-- ABA CATÁLOGO GLOBAL -->
+<div id="panel-cat" class="panel">
+  <div class="sh">
+    <div><div class="ss">CATÁLOGO GLOBAL · REUTILIZÁVEL EM TODAS AS OPs</div><div class="st">Tecidos &amp; Cores</div></div>
+    <div class="ml">
+      <button class="btn bgreen bsm" onclick="exportCatalog()">⬇ Exportar catálogo</button>
+      <button class="btn bg bsm" onclick="document.getElementById('cat-import-input').click()">⬆ Importar catálogo</button>
+      <input type="file" id="cat-import-input" accept=".json" onchange="importCatalog(event)" style="display:none">
+    </div>
+  </div>
+
+  <div class="cat-info">
+    <span style="font-size:1.2rem">📚</span>
+    <div>
+      <strong style="color:var(--gr)">Catálogo global de tecidos</strong> — cadastre aqui os tipos e cores que você usa com frequência.
+      Eles ficam salvos permanentemente e aparecem como opção nos dropdowns de <strong>todas as OPs</strong>.
+      Ao cadastrar uma OP, você ainda pode adicionar tecidos locais específicos daquela OP.
+    </div>
+  </div>
+
+  <div class="cat-grid">
+    <!-- Coluna esq: lista de tipos -->
+    <div class="card">
+      <div class="ch"><div class="ct">Tipos de Tecido <span class="cbadge" id="cat-tipo-count">0</span></div></div>
+      <div id="cat-tipo-list" class="tipo-list"></div>
+      <div class="add-tipo-row">
+        <input type="text" id="cat-new-tipo" placeholder="Novo tipo (ex: OXFORD)" style="flex:1" onkeydown="if(event.key==='Enter')addCatTipo()">
+        <button class="btn bp bsm" onclick="addCatTipo()">+ Adicionar</button>
+      </div>
+    </div>
+
+    <!-- Coluna dir: cores do tipo selecionado -->
+    <div class="card" id="cat-cor-card">
+      <div class="ch">
+        <div class="ct" id="cat-cor-title">Selecione um tipo</div>
+        <button class="btn bp bsm" id="cat-use-btn" style="display:none" onclick="importTipoToOP()">➕ Usar na OP atual</button>
+      </div>
+      <div id="cat-cor-body">
+        <div class="cat-empty">Selecione um tipo de tecido ao lado para ver e gerenciar suas cores.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABA 0: HISTÓRICO -->
+<div id="panel-db" class="panel on">
+  <div class="sh">
+    <div><div class="ss">BANCO DE DADOS</div><div class="st">Histórico de OPs</div></div>
+    <div class="ml">
+      <button class="btn bgreen bsm" onclick="exportDB()">⬇ Exportar histórico</button>
+      <button class="btn bg bsm" onclick="document.getElementById('import-input').click()">⬆ Importar histórico</button>
+      <input type="file" id="import-input" accept=".json" onchange="importDB(event)">
+      <button class="btn bp bsm" onclick="newOP()">+ Nova OP</button>
+    </div>
+  </div>
+
+  <!-- INFO BANNER -->
+  <div style="background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.3);border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+    <span style="font-size:1.2rem">💾</span>
+    <div>
+      <div style="font-family:var(--fh);font-size:.78rem;font-weight:700;color:var(--gr)">Como salvar o histórico permanentemente</div>
+      <div style="font-family:var(--fm);font-size:.68rem;color:var(--tm);margin-top:2px">
+        Clique em <strong>⬇ Exportar histórico</strong> para baixar um arquivo <code>.json</code> com todas as OPs.
+        Para restaurar em outro computador ou após limpar o navegador, use <strong>⬆ Importar histórico</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="db-grid">
+    <div class="card">
+      <div class="ch"><div class="ct">OPs Salvas <span class="cbadge" id="op-count">0</span></div></div>
+      <div class="db-toolbar">
+        <span style="font-family:var(--fm);font-size:.68rem;color:var(--ts)">Ordenar:</span>
+        <button class="btn bg bsm" onclick="renderDB('date')">Por data</button>
+        <button class="btn bg bsm" onclick="renderDB('client')">Por cliente</button>
+      </div>
+      <div id="op-list" class="op-list"></div>
+    </div>
+    <div id="op-detail">
+      <div class="detail-card" style="text-align:center;padding:40px 16px;color:var(--ts);font-family:var(--fm);font-size:.78rem">
+        Selecione uma OP ao lado ou crie uma nova.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABA 1: CADASTRO -->
+<div id="panel-cad" class="panel">
+  <div class="sh">
+    <div><div class="st">Cadastro</div></div>
+    <div class="ml"><button class="btn bp bsm" onclick="saveCurrentOP()">💾 Salvar OP</button></div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><div class="ct">Identificação da OP</div></div>
+    <div style="padding:14px 16px">
+      <div class="frow3">
+        <div class="fgroup"><span class="flabel">Nome do Cliente</span><input type="text" class="ifield" id="f-cliente" placeholder="Ex: MAHALO" oninput="syncHeader()"></div>
+        <div class="fgroup"><span class="flabel">Número da OP</span><input type="text" class="ifield" id="f-op" placeholder="Ex: 453" oninput="syncHeader()"></div>
+        <div class="fgroup"><span class="flabel">Referência</span><input type="text" class="ifield" id="f-ref" placeholder="Ex: BEAD1050053" oninput="syncHeader()"></div>
+      </div>
+      <div class="frow2">
+        <div class="fgroup"><span class="flabel">Data</span><input type="text" class="ifield" id="f-data" placeholder="Ex: 2025-06-03"></div>
+        <div class="fgroup"><span class="flabel">Descrição / Produto</span><input type="text" class="ifield" id="f-desc" placeholder="Ex: Calça Social Masculina"></div>
+      </div>
+      <div style="margin-bottom:12px">
+        <span class="flabel">Tipo de Grade</span>
+        <div class="grade-type-btns">
+          <button class="gtbtn on" id="gtbtn-1" onclick="setGradeType(1)">Tipo 1 — Numérico adulto<br><small style="font-weight:400;opacity:.7">36 38 40 42 44 46 48 50 52 54</small></button>
+          <button class="gtbtn" id="gtbtn-2" onclick="setGradeType(2)">Tipo 2 — Letras<br><small style="font-weight:400;opacity:.7">PP P M G GG XG XXG</small></button>
+          <button class="gtbtn" id="gtbtn-3" onclick="setGradeType(3)">Tipo 3 — Numérico infantil<br><small style="font-weight:400;opacity:.7">2 4 6 8 10 12 14 16</small></button>
+        </div>
+        <div class="grade-info" id="grade-info">Grade ativa: 36 · 38 · 40 · 42 · 44 · 46 · 48 · 50 · 52 · 54</div>
+      </div>
+      <!-- Row 3: Previsão entrega + Rendimento + Cortador + Enfestador -->
+      <div class="frow3" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+        <div class="fgroup">
+          <span class="flabel">Previsão de Entrega</span>
+          <input type="date" class="ifield" id="f-entrega" style="cursor:pointer">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Rendimento</span>
+          <input type="number" step="0.01" min="0" class="ifield" id="f-rendimento" placeholder="Ex: 1.85" style="text-align:left">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Cortador</span>
+          <input type="text" class="ifield" id="f-cortador" placeholder="Nome do cortador">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Enfestador</span>
+          <input type="text" class="ifield" id="f-enfestador" placeholder="Nome do enfestador">
+        </div>
+      </div>
+      <!-- Row 4: Marca tecido + Largura tecido + Largura forro + Unidade -->
+      <div class="frow3" style="grid-template-columns:1fr 1fr 1fr auto;gap:12px;margin-bottom:12px;align-items:end">
+        <div class="fgroup">
+          <span class="flabel">Marca do Tecido</span>
+          <input type="text" class="ifield" id="f-marca-tecido" placeholder="Ex: Santanense">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Largura do Tecido (m)</span>
+          <input type="number" step="0.01" min="0" class="ifield" id="f-largura-tecido" placeholder="Ex: 1.50" style="text-align:left">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Largura Forro (m)</span>
+          <input type="number" step="0.01" min="0" class="ifield" id="f-largura-forro" placeholder="Ex: 1.40" style="text-align:left">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Unidade</span>
+          <div class="unidade-toggle" id="unidade-toggle">
+            <button class="utbtn on" id="utbtn-metros" onclick="setUnidade('Metros')">
+              <span class="uticon">📏</span> Metros
+            </button>
+            <button class="utbtn" id="utbtn-kilos" onclick="setUnidade('Kilos')">
+              <span class="uticon">⚖️</span> Kilos
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="frow1">
+        <span class="flabel">Observação</span>
+        <textarea id="f-obs" placeholder="Informações adicionais sobre esta OP, detalhes de acabamento, prazo de entrega, etc."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ch">
+        <div class="ct">Tecidos &amp; Cores <span class="cbadge" id="badge-tec">0 itens</span></div>
+        <button class="btn bp bsm" onclick="openTipoFromCatalog()">+ Do catálogo</button>
+        <button class="btn bg bsm" onclick="addTec()">+ Manual</button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th style="text-align:left;width:42%">Tipo de Tecido</th><th style="text-align:left;width:43%">Cor / Discriminação</th><th style="width:15%">—</th></tr></thead>
+          <tbody id="tb-tec"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">Grades por Corte <span class="cbadge" id="badge-grade-type">Tipo 1</span></div></div>
+      <div class="tw">
+        <table id="grade-table">
+          <thead id="grade-thead"></thead>
+          <tbody id="tb-grades"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABA 2: MONTAGEM -->
+<div id="panel-mon" class="panel">
+  <div class="sh">
+    <div><div class="st">Montagem de Corte</div></div>
+    <div class="ml">
+      <span class="chip-grade" id="chip-grade-type">Tipo 1</span>
+      <span class="chip cha" id="chip-total">0 peças</span>
+    </div>
+  </div>
+  <div class="ctabs" id="ctabs"></div>
+  <div id="cpanels"></div>
+</div>
+
+<!-- ABA 3: RESUMO -->
+<div id="panel-res" class="panel">
+
+  <!-- ── Cabeçalho da OP ── -->
+  <div class="res-header-card" id="res-op-card">
+    <div class="res-header-top">
+      <div class="res-header-brand">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="2" fill="#e8a030"/><rect x="11" y="1" width="8" height="8" rx="2" fill="rgba(232,160,48,.4)"/><rect x="1" y="11" width="8" height="8" rx="2" fill="rgba(232,160,48,.4)"/><rect x="11" y="11" width="8" height="8" rx="2" fill="#e8a030"/></svg>
+        PROVEST <b>CORTE</b>
+      </div>
+      <div class="res-header-title" id="res-op-title">—</div>
+      <div class="res-header-date" id="res-op-date">—</div>
+    </div>
+    <div class="res-header-fields" id="res-op-fields"></div>
+  </div>
+
+  <div class="sh">
+    <div><div class="st">Resumo Geral</div></div>
+    <div class="ml">
+      <button class="btn bp bsm" onclick="renderRes()">↺ Atualizar</button>
+      <button class="btn bgreen bsm" onclick="printResumo()">🖨 Imprimir</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><div class="ct">Total por Corte</div></div>
+    <div class="tw"><table><thead id="res-thead-corte"></thead><tbody id="tb-rc"></tbody></table></div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><div class="ct">Total por Cor <span class="cbadge">todos os cortes agrupados</span></div></div>
+    <div class="tw"><table><thead id="res-thead-cor"></thead><tbody id="tb-rcor"></tbody></table></div>
+  </div>
+
+  <!-- Total por Cor × Corte -->
+  <div class="card">
+    <div class="ch">
+      <div class="ct">Total por Cor × Corte <span class="cbadge">quantidade por cor em cada corte</span></div>
+    </div>
+    <div class="tw"><table><thead id="res-thead-corcorte"></thead><tbody id="tb-rcorcorte"></tbody></table></div>
+  </div>
+
+</div>
+
+</main>
+</div>
+<div id="toast"></div>
+
+<script>
+// ── GRADE TYPES ────────────────────────────────────────────────
+const GRADE_TYPES={
+  1:{label:'Tipo 1 — Numérico adulto', sizes:['36','38','40','42','44','46','48','50','52','54']},
+  2:{label:'Tipo 2 — Letras',          sizes:['PP','P','M','G','GG','XG','XXG']},
+  3:{label:'Tipo 3 — Numérico infantil',sizes:['2','4','6','8','10','12','14','16']},
+};
+const N_COR_DEFAULT=20;
+
+function makeGrades(gt){
+  const len=GRADE_TYPES[gt].sizes.length;
+  return ['CORTE 01','CORTE 02','CORTE 03','CORTE 04']
+    .map(nome=>({nome,vals:Array(len).fill(0)}));
+}
+function makeCortes(n){
+  return Array.from({length:n},()=>({
+    rows: Array.from({length:N_COR_DEFAULT},()=>({marcacao:'',tipo:'',cor:'',folhas:'',kgmetro:''}))
+  }));
+}
+
+let S={
+  id:null,cliente:'MAHALO',op:'453',ref:'BEAD1050053',
+  data:new Date().toISOString().slice(0,10),desc:'',obs:'',gradeType:1,
+  tecidos:[
+    {tipo:'RENAUVIEW PANA',cor:'Azul Marinho'},
+    {tipo:'RENAUVIEW PANA',cor:'Preto'},
+    {tipo:'RENAUVIEW PANA',cor:'Vermelho'},
+  ],
+  grades:[
+    {nome:'CORTE 01',vals:[0,1,2,3,2,1,0,0,0,0]},
+    {nome:'CORTE 02',vals:[0,0,1,1,0,0,0,0,0,0]},
+    {nome:'CORTE 03',vals:[0,0,0,0,0,0,3,2,1,1]},
+    {nome:'CORTE 04',vals:[1,0,0,0,0,0,0,0,0,0]},
+  ],
+  cortes:makeCortes(4),
+};
+S.cortes.forEach(c=>{if(S.tecidos[0]){c.rows[0].tipo=S.tecidos[0].tipo;c.rows[0].cor=S.tecidos[0].cor;}});
+
+// ── LOCALSTORAGE ───────────────────────────────────────────────
+const LS_PREFIX='provest_op_';
+function lsKeys(){return Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX));}
+function lsSave(data){try{localStorage.setItem(LS_PREFIX+data.id,JSON.stringify(data));return true;}catch(e){return false;}}
+function lsGet(id){try{const v=localStorage.getItem(LS_PREFIX+id);return v?JSON.parse(v):null;}catch(e){return null;}}
+function lsDel(id){try{localStorage.removeItem(LS_PREFIX+id);return true;}catch(e){return false;}}
+function lsAll(){return lsKeys().map(k=>lsGet(k.replace(LS_PREFIX,''))).filter(Boolean);}
+
+// ── EXPORT / IMPORT ────────────────────────────────────────────
+function exportDB(){
+  const ops=lsAll();
+  if(!ops.length){toast('Nenhuma OP para exportar.');return;}
+  const blob=new Blob([JSON.stringify({version:1,exportedAt:Date.now(),ops},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='provest_historico_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Histórico exportado: '+ops.length+' OP(s).');
+}
+
+function importDB(ev){
+  const file=ev.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      const ops=data.ops||data; // accept array or wrapped object
+      if(!Array.isArray(ops))throw new Error('Formato inválido');
+      let imported=0,skipped=0;
+      ops.forEach(op=>{
+        if(!op.id)return;
+        const existing=lsGet(op.id);
+        // Merge: keep newer version
+        if(!existing||op.savedAt>existing.savedAt){lsSave(op);imported++;}
+        else skipped++;
+      });
+      renderDB();
+      toast(`Importado: ${imported} OP(s) adicionada(s), ${skipped} já existia(m).`);
+    }catch(err){
+      toast('Erro ao importar: arquivo inválido.');
+    }
+  };
+  reader.readAsText(file);
+  ev.target.value=''; // reset so same file can be re-imported
+}
+
+// ── UTILS ──────────────────────────────────────────────────────
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function num(v){const n=parseFloat(v);return isNaN(n)?0:n;}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600);}
+function tipos(){return[...new Set(S.tecidos.map(t=>t.tipo))];}
+function coresDe(tipo){return S.tecidos.filter(t=>t.tipo===tipo).map(t=>t.cor);}
+function sizes(){return GRADE_TYPES[S.gradeType].sizes;}
+
+function calcRow(ci,fi){
+  const r=S.cortes[ci].rows[fi];
+  const g=S.grades[ci].vals;
+  const f=num(r.folhas);
+  if(!f||!r.tipo||!r.cor)return sizes().map(()=>0);
+  return g.map(v=>v*f);
+}
+function subCorte(ci){
+  const s=sizes().map(()=>0);
+  const nRows=S.cortes[ci].rows.length;
+  for(let fi=0;fi<nRows;fi++)calcRow(ci,fi).forEach((x,j)=>s[j]+=x);
+  return s;
+}
+function totalByCor(){
+  const m={};
+  for(let ci=0;ci<S.grades.length;ci++){
+    const nRows=S.cortes[ci].rows.length;
+    for(let fi=0;fi<nRows;fi++){
+      const r=S.cortes[ci].rows[fi];
+      if(!r.tipo||!r.cor)continue;
+      const k=r.tipo+'||'+r.cor;
+      if(!m[k])m[k]=sizes().map(()=>0);
+      calcRow(ci,fi).forEach((x,j)=>m[k][j]+=x);
+    }
+  }
+  return m;
+}
+function grandTotal(){
+  const s=sizes().map(()=>0);
+  for(let ci=0;ci<S.grades.length;ci++)subCorte(ci).forEach((x,j)=>s[j]+=x);
+  return s;
+}
+function updateMeta(){
+  const t=grandTotal().reduce((a,b)=>a+b,0);
+  document.getElementById('tb-total').textContent='TOTAL: '+t+' PÇ';
+  const c=document.getElementById('chip-total');if(c)c.textContent=t+' peças';
+  const cgt=document.getElementById('chip-grade-type');if(cgt)cgt.textContent=GRADE_TYPES[S.gradeType].label;
+}
+function syncHeader(){
+  const cl=document.getElementById('f-cliente').value;
+  const op=document.getElementById('f-op').value;
+  const rf=document.getElementById('f-ref').value;
+  S.cliente=cl;S.op=op;S.ref=rf;
+  document.getElementById('tb-op').textContent=(cl||'SEM CLIENTE')+(op?' · OP '+op:'')+(rf?' · REF '+rf:'');
+}
+
+// ── GRADE TYPE ─────────────────────────────────────────────────
+
+function setUnidade(val){
+  S.unidade=val;
+  document.getElementById('utbtn-metros').classList.toggle('on', val==='Metros');
+  document.getElementById('utbtn-kilos').classList.toggle('on',  val==='Kilos');
+  // Update all Kg/Metro column headers in montagem
+  updateUnidadeHeaders();
+}
+function updateUnidadeHeaders(){
+  const label=S.unidade||'Metros';
+  // Update all corte table headers
+  document.querySelectorAll('.kgmetro-header').forEach(el=>el.textContent=label);
+}
+function setGradeType(type,rebuild=true){
+  S.gradeType=type;
+  [1,2,3].forEach(i=>document.getElementById('gtbtn-'+i).classList.toggle('on',i===type));
+  const sz=GRADE_TYPES[type].sizes;
+  document.getElementById('grade-info').textContent='Grade ativa: '+sz.join(' · ');
+  document.getElementById('badge-grade-type').textContent='Tipo '+type;
+  if(rebuild){
+    S.grades=S.grades.map(g=>({nome:g.nome,vals:Array(sz.length).fill(0)}));
+    S.cortes=makeCortes(S.grades.length);
+    renderGrades();buildMon();refreshCalcs();
+  }
+  updateMeta();
+}
+
+// ── TABS ───────────────────────────────────────────────────────
+function goTab(name){
+  ['cat','db','cad','mon','res'].forEach((t,i)=>{
+    document.getElementById('panel-'+t).classList.toggle('on',t===name);
+    document.querySelectorAll('.ntab')[i].classList.toggle('on',t===name);
+  });
+  if(name==='res'){renderRes();}
+  updateMeta();
+}
+
+// ── PRINT ──────────────────────────────────────────────────────
+function printResumo(){
+  renderRes();
+  setTimeout(()=>window.print(),120);
+}
+
+// ── ABA 0: HISTÓRICO ──────────────────────────────────────────
+let _dbSort='date';
+function renderDB(sort){
+  if(sort)_dbSort=sort;
+  const ops=lsAll();
+  document.getElementById('op-count').textContent=ops.length;
+  const list=document.getElementById('op-list');
+  if(!ops.length){
+    list.innerHTML='<div style="padding:24px;text-align:center;color:var(--ts);font-family:var(--fm);font-size:.72rem">Nenhuma OP salva.<br>Clique em <b>+ Nova OP</b> para começar.</div>';
+    return;
+  }
+  if(_dbSort==='client') ops.sort((a,b)=>(a.cliente||'').localeCompare(b.cliente||''));
+  else ops.sort((a,b)=>b.savedAt-a.savedAt);
+  list.innerHTML='';
+  ops.forEach(op=>{
+    const div=document.createElement('div');
+    div.className='op-item'+(S.id===op.id?' on':'');
+    div.innerHTML=`<div>
+      <div class="op-name">${esc(op.cliente||'Sem cliente')}</div>
+      <div class="op-meta">OP ${esc(op.op||'—')} · Ref ${esc(op.ref||'—')}</div>
+      <div class="op-meta">${new Date(op.savedAt).toLocaleDateString('pt-BR')} · Tipo ${op.gradeType||1}</div>
+    </div>
+    <span class="op-badge">${(op.grades||[]).length} cortes</span>`;
+    div.onclick=e=>showDetail(op,div);
+    list.appendChild(div);
+  });
+}
+
+function showDetail(data,el){
+  document.querySelectorAll('.op-item').forEach(e=>e.classList.remove('on'));
+  if(el)el.classList.add('on');
+  const pts=grandTotalFromData(data);
+  const gtLabel=GRADE_TYPES[data.gradeType||1].label;
+  const sz=GRADE_TYPES[data.gradeType||1].sizes;
+  document.getElementById('op-detail').innerHTML=`
+  <div class="detail-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+      <div>
+        <div style="font-family:var(--fh);font-size:1.1rem;font-weight:700;color:var(--n)">${esc(data.cliente||'—')}</div>
+        <div style="font-family:var(--fm);font-size:.7rem;color:var(--ts);margin-top:2px">Salvo em ${new Date(data.savedAt).toLocaleString('pt-BR')}</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bp bsm" onclick="loadOP('${data.id}')">📂 Carregar</button>
+        <button class="btn bd2 bsm" onclick="confirmDelete('${data.id}')">🗑 Excluir</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+      <div><div class="detail-label">OP</div><div class="detail-val">${esc(data.op||'—')}</div></div>
+      <div><div class="detail-label">Referência</div><div class="detail-val">${esc(data.ref||'—')}</div></div>
+      <div><div class="detail-label">Produto</div><div class="detail-val">${esc(data.desc||'—')}</div></div>
+      <div><div class="detail-label">Data</div><div class="detail-val">${esc(data.data||'—')}</div></div>
+      <div><div class="detail-label">Previsão Entrega</div><div class="detail-val">${data.entrega?new Date(data.entrega+'T00:00:00').toLocaleDateString('pt-BR'):'—'}</div></div>
+      <div><div class="detail-label">Total de Peças</div><div class="detail-val" style="color:var(--gr);font-family:var(--fm);font-size:1rem">${pts}</div></div>
+      <div><div class="detail-label">Tipo de Grade</div><div class="detail-val" style="font-size:.78rem">${esc(gtLabel)}</div></div>
+      <div><div class="detail-label">Cortador</div><div class="detail-val">${esc(data.cortador||'—')}</div></div>
+      <div><div class="detail-label">Enfestador</div><div class="detail-val">${esc(data.enfestador||'—')}</div></div>
+      <div><div class="detail-label">Rendimento</div><div class="detail-val" style="font-family:var(--fm)">${esc(data.rendimento||'—')}</div></div>
+      <div><div class="detail-label">Marca do Tecido</div><div class="detail-val">${esc(data.marcaTecido||'—')}</div></div>
+      <div><div class="detail-label">Largura Tecido</div><div class="detail-val" style="font-family:var(--fm)">${data.larguraTecido?data.larguraTecido+' m':'—'}</div></div>
+      <div><div class="detail-label">Largura Forro</div><div class="detail-val" style="font-family:var(--fm)">${data.larguraForro?data.larguraForro+' m':'—'}</div></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div class="detail-label" style="margin-bottom:4px">Tamanhos</div>
+      <div style="font-family:var(--fm);font-size:.72rem;color:var(--tm)">${sz.join(' · ')}</div>
+    </div>
+    ${data.obs?`<div style="margin-bottom:10px">
+      <div class="detail-label" style="margin-bottom:4px">Observação</div>
+      <div style="font-family:var(--fb);font-size:.8rem;color:var(--tm);background:var(--il);border-radius:4px;padding:8px 10px;border:1px solid var(--bl)">${esc(data.obs)}</div>
+    </div>`:''}
+    <div style="border-top:1px solid var(--bl);padding-top:10px">
+      <div class="detail-label" style="margin-bottom:6px">Tecidos Cadastrados</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">
+        ${[...new Set((data.tecidos||[]).map(t=>t.tipo+'||'+t.cor))].map(k=>{const[tipo,cor]=k.split('||');return`<span class="chip chn">${esc(tipo)} · ${esc(cor)}</span>`;}).join('')||'<span style="color:var(--ts);font-size:.72rem;font-family:var(--fm)">—</span>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+function grandTotalFromData(data){
+  if(!data.cortes||!data.grades)return 0;
+  let s=0;
+  data.cortes.forEach((corte,ci)=>{
+    const gs=(data.grades[ci]||{vals:[]}).vals.reduce((a,b)=>a+b,0);
+    corte.forEach(r=>{const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
+  });
+  return s;
+}
+
+function loadOP(id){
+  const data=lsGet(id);
+  if(!data){toast('OP não encontrada.');return;}
+  S=JSON.parse(JSON.stringify(data));
+  if(!S.gradeType)S.gradeType=1;
+  // Migrate old format: cortes was array-of-arrays, now array-of-{rows:[]}
+  if(S.cortes&&Array.isArray(S.cortes)){
+    S.cortes=S.cortes.map(c=>{
+      if(Array.isArray(c))return{rows:c.map(r=>({marcacao:r.marcacao||'',tipo:r.tipo||'',cor:r.cor||'',folhas:r.folhas||'',kgmetro:r.kgmetro||''}))};
+      if(c&&Array.isArray(c.rows))return{rows:c.rows.map(r=>({marcacao:r.marcacao||'',tipo:r.tipo||'',cor:r.cor||'',folhas:r.folhas||'',kgmetro:r.kgmetro||''}))};
+      return{rows:[{marcacao:'',tipo:'',cor:'',folhas:'',kgmetro:''}]};
+    });
+  }
+  const fieldMap={cliente:'f-cliente',op:'f-op',ref:'f-ref',data:'f-data',desc:'f-desc',obs:'f-obs',
+    entrega:'f-entrega',rendimento:'f-rendimento',cortador:'f-cortador',enfestador:'f-enfestador',
+    marcaTecido:'f-marca-tecido',larguraTecido:'f-largura-tecido',larguraForro:'f-largura-forro'};
+  Object.entries(fieldMap).forEach(([k,id])=>{
+    const el=document.getElementById(id);if(el)el.value=S[k]||'';
+  });
+  syncHeader();setGradeType(S.gradeType,false);
+  setUnidade(S.unidade||'Metros');
+  renderTec();renderGrades();buildMon();refreshCalcs();
+  goTab('cad');toast('OP carregada: '+S.cliente+' / OP '+S.op);updateResOPCard();
+}
+
+function confirmDelete(id){
+  if(!confirm('Excluir esta OP?'))return;
+  lsDel(id);
+  document.getElementById('op-detail').innerHTML=`<div class="detail-card" style="text-align:center;padding:40px 16px;color:var(--ts);font-family:var(--fm);font-size:.78rem">Selecione uma OP ao lado ou crie uma nova.</div>`;
+  renderDB();toast('OP excluída.');
+}
+
+function newOP(){
+  S={
+    id:uid(),cliente:'',op:'',ref:'',data:new Date().toISOString().slice(0,10),
+    desc:'',obs:'',entrega:'',rendimento:'',cortador:'',enfestador:'',marcaTecido:'',larguraTecido:'',larguraForro:'',unidade:'Metros',gradeType:1,
+    tecidos:[],grades:makeGrades(1),cortes:makeCortes(4),
+  };
+  ['f-cliente','f-op','f-ref','f-desc','f-obs','f-entrega','f-rendimento','f-cortador','f-enfestador','f-marca-tecido','f-largura-tecido','f-largura-forro'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';}); S.unidade='Metros';
+  document.getElementById('f-data').value=S.data;
+  syncHeader();setGradeType(1,false);setUnidade('Metros');renderTec();renderGrades();buildMon();refreshCalcs();
+  goTab('cad');toast('Nova OP criada. Preencha os dados e salve.');
+}
+
+function saveCurrentOP(){
+  if(!S.id)S.id=uid();
+  S.savedAt=Date.now();
+  S.desc=document.getElementById('f-desc').value;
+  S.obs=document.getElementById('f-obs').value;
+  S.entrega=document.getElementById('f-entrega').value;
+  S.rendimento=document.getElementById('f-rendimento').value;
+  S.cortador=document.getElementById('f-cortador').value;
+  S.enfestador=document.getElementById('f-enfestador').value;
+  S.marcaTecido=document.getElementById('f-marca-tecido').value;
+  S.larguraTecido=document.getElementById('f-largura-tecido').value;
+  S.larguraForro=document.getElementById('f-largura-forro').value;
+  // unidade saved via setUnidade already in S.unidade
+  if(lsSave(S)){renderDB();toast('OP salva: '+(S.cliente||'sem cliente')+' / OP '+(S.op||'—'));}
+  else toast('Erro ao salvar.');
+}
+
+// ── ABA 1: TECIDOS ────────────────────────────────────────────
+function renderTec(){
+  const tb=document.getElementById('tb-tec');
+  tb.innerHTML='';
+  if(!S.tecidos.length){
+    tb.innerHTML='<tr class="empty"><td colspan="3">Nenhum tecido cadastrado.</td></tr>';
+  }else{
+    S.tecidos.forEach((t,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><input type="text" class="itipo" value="${esc(t.tipo)}" placeholder="Tipo" oninput="S.tecidos[${i}].tipo=this.value;syncDrops()"></td>
+      <td><input type="text" class="icor" value="${esc(t.cor)}" placeholder="Cor" oninput="S.tecidos[${i}].cor=this.value;syncDrops()"></td>
+      <td style="text-align:center"><button class="btn bd2 bsm" onclick="rmTec(${i})">✕</button></td>`;
+      tb.appendChild(tr);
+    });
+  }
+  document.getElementById('badge-tec').textContent=S.tecidos.length+' iten'+(S.tecidos.length===1?'':'s');
+}
+function addTec(){S.tecidos.push({tipo:'',cor:''});renderTec();}
+function rmTec(i){S.tecidos.splice(i,1);renderTec();syncDrops();}
+
+// ── ABA 1: GRADES ─────────────────────────────────────────────
+function renderGrades(){
+  const sz=sizes();
+  document.getElementById('grade-thead').innerHTML=
+    '<tr><th style="text-align:left">Corte</th>'+sz.map(s=>`<th>${s}</th>`).join('')+'<th>Total</th></tr>';
+  const tb=document.getElementById('tb-grades');tb.innerHTML='';
+  S.grades.forEach((g,ci)=>{
+    while(g.vals.length<sz.length)g.vals.push(0);
+    g.vals=g.vals.slice(0,sz.length);
+    const tr=document.createElement('tr');
+    let h=`<td class="tl">${esc(g.nome)}</td>`;
+    g.vals.forEach((v,j)=>{
+      h+=`<td><input type="number" class="itam" min="0" value="${v}" oninput="S.grades[${ci}].vals[${j}]=num(this.value);updGT(${ci});refreshCalcs()"></td>`;
+    });
+    h+=`<td class="ttotal" id="gt-${ci}">${g.vals.reduce((a,b)=>a+b,0)||'—'}</td>`;
+    tr.innerHTML=h;tb.appendChild(tr);
+  });
+}
+function updGT(ci){const e=document.getElementById('gt-'+ci);if(e)e.textContent=S.grades[ci].vals.reduce((a,b)=>a+b,0)||'—';}
+
+// ── ABA 2: MONTAGEM ───────────────────────────────────────────
+function buildMon(){
+  const tabs=document.getElementById('ctabs');
+  const panels=document.getElementById('cpanels');
+  tabs.innerHTML='';panels.innerHTML='';
+  S.grades.forEach((g,ci)=>{
+    const btn=document.createElement('button');
+    btn.className='ctab'+(ci===0?' on':'');
+    btn.textContent=g.nome;btn.onclick=()=>showCTab(ci);
+    tabs.appendChild(btn);
+    const div=document.createElement('div');
+    div.id='cpanel-'+ci;div.className='cpanel'+(ci===0?' on':'');
+    div.innerHTML=buildCTable(ci);panels.appendChild(div);
+  });
+}
+function showCTab(ci){
+  document.querySelectorAll('.ctab').forEach((b,i)=>b.classList.toggle('on',i===ci));
+  document.querySelectorAll('.cpanel').forEach((p,i)=>p.classList.toggle('on',i===ci));
+}
+function buildCTable(ci){
+  const g=S.grades[ci];const sz=sizes();
+  const ths=sz.map(s=>`<th>${s}</th>`).join('');
+  let html=`<div class="card">
+  <div class="ch">
+    <div class="ct">${esc(g.nome)} <span class="cbadge">${sz.map((s,j)=>s+':'+g.vals[j]).join(' ')}</span></div>
+    <span class="chip cha" id="sch-${ci}">0 pç</span>
+  </div>
+  <div class="tw"><table>
+  <thead><tr>
+    <th style="min-width:44px">Marcação</th>
+    <th style="min-width:140px;text-align:left">Tipo de Tecido</th>
+    <th style="min-width:160px;text-align:left">Cor / Discriminação</th>
+    <th style="min-width:65px">Folhas</th>${ths}<th>Total</th><th class="kgmetro-header" style="min-width:72px">${S.unidade||'Metros'}</th><th style="width:36px"></th>
+  </tr></thead><tbody>
+  <tr class="rgrade">
+    <td class="ts2" colspan="2">← grade predefinida</td>
+    <td class="ts2" style="text-align:center">—</td>`;
+  g.vals.forEach(v=>{html+=`<td class="ts2" style="font-family:var(--fm);text-align:center">${v||'—'}</td>`;});
+  html+=`<td class="ts2" style="font-family:var(--fm)">${g.vals.reduce((a,b)=>a+b,0)||'—'}</td><td class="ts2">—</td><td></td></tr>`;
+  const nRows=S.cortes[ci].rows.length;
+  for(let fi=0;fi<nRows;fi++)html+=buildCorRow(ci,fi);
+  html+=`<tr><td colspan="${sizes().length+5}" style="padding:8px 10px;background:var(--il);border-top:2px dashed var(--bd)">
+    <button class="btn bg bsm" onclick="addCorRow(${ci})" style="width:100%;justify-content:center">+ Adicionar linha</button>
+  </td></tr>`;
+  html+=`<tr class="tsub"><td class="ts3" colspan="4" style="text-align:left;padding-left:10px">Subtotal ${esc(g.nome)}</td>`;
+  sz.forEach((_,j)=>{html+=`<td class="ts3" id="sb-${ci}-${j}">—</td>`;});
+  html+=`<td class="ts3" id="sb-${ci}-t">—</td>
+    <td class="ts3" id="sb-${ci}-kg" style="background:var(--nl)!important">—</td>
+    <td style="background:var(--nl)"></td></tr>`;
+
+  // Folhas total row (extra summary row above subtotal)
+  html+=`<tr style="background:rgba(15,28,46,.04)">
+    <td colspan="4" style="text-align:right;padding:5px 10px;font-family:var(--fm);font-size:.7rem;color:var(--ts)">Total Folhas →</td>`;
+  sizes().forEach((_,j)=>{html+=`<td style="font-family:var(--fm);font-size:.72rem;color:var(--ts)" id="sf-${ci}-${j}">—</td>`;});
+  html+=`<td class="ttotal" id="sf-${ci}-t" style="font-size:.8rem">—</td>
+    <td id="sf-${ci}-kg" class="kgmetro-header-cell" style="font-family:var(--fm);font-size:.78rem;font-weight:700;color:var(--gr);text-align:center">—</td>
+    <td></td></tr>
+  </tbody></table></div></div>`;
+  return html;
+}
+function buildCorRow(ci,fi){
+  const r=S.cortes[ci].rows[fi];
+  const sz=sizes();
+  const tiposOpts=tipos().map(t=>`<option value="${esc(t)}"${r.tipo===t?' selected':''}>${esc(t)}</option>`).join('');
+  const corsOpts=(r.tipo?coresDe(r.tipo):S.tecidos.map(t=>t.cor))
+    .map(c=>`<option value="${esc(c)}"${r.cor===c?' selected':''}>${esc(c)}</option>`).join('');
+  const vals=calcRow(ci,fi);const rt=vals.reduce((a,b)=>a+b,0);
+  const marcOpts=Array.from({length:20},(_,i)=>
+    `<option value="${i+1}"${r.marcacao==i+1?' selected':''}>${i+1}</option>`).join('');
+  let h=`<tr>
+    <td style="width:54px;padding:4px 6px">
+      <select id="sm-${ci}-${fi}" style="width:54px;text-align:center;font-family:var(--fm);font-weight:700;color:var(--n)"
+        onchange="S.cortes[${ci}].rows[${fi}].marcacao=parseInt(this.value)||'';updateMeta()">
+        <option value="">—</option>${marcOpts}
+      </select>
+    </td>
+    <td><select onchange="onTipo(${ci},${fi},this.value)"><option value="">— selecionar —</option>${tiposOpts}</select></td>
+    <td><select id="sc-${ci}-${fi}" onchange="S.cortes[${ci}].rows[${fi}].cor=this.value;rcRow(${ci},${fi})"><option value="">— selecionar —</option>${corsOpts}</select></td>
+    <td><input type="number" class="ifolhas" min="0" value="${r.folhas||''}" placeholder="0" oninput="S.cortes[${ci}].rows[${fi}].folhas=this.value;rcRow(${ci},${fi})"></td>`;
+  vals.forEach((v,j)=>{h+=`<td class="tcalc" id="c-${ci}-${fi}-${j}">${v||'—'}</td>`;});
+  h+=`<td class="ttotal" id="c-${ci}-${fi}-t">${rt||'—'}</td>
+    <td style="padding:4px 6px;min-width:72px">
+      <input type="number" step="0.001" min="0" style="width:70px;text-align:center;font-family:var(--fm);font-size:.75rem;background:#f0f7f4;border-color:#a8d5b2;color:var(--gr)"
+        value="${r.kgmetro||''}" placeholder="0.000"
+        oninput="S.cortes[${ci}].rows[${fi}].kgmetro=this.value;updKgTotal(${ci})">
+    </td>
+    <td style="width:36px;padding:4px 6px;background:rgba(192,57,43,.04);border-left:1px solid var(--bl)">
+      <button class="btn bd2 bsm" title="Remover linha" onclick="removeCorRow(${ci},${fi})" style="padding:3px 7px;font-size:.75rem">✕</button>
+    </td></tr>`;
+  return h;
+}
+function onTipo(ci,fi,tipo){
+  S.cortes[ci].rows[fi].tipo=tipo;S.cortes[ci].rows[fi].cor='';
+  const sel=document.getElementById('sc-'+ci+'-'+fi);if(!sel)return;
+  sel.innerHTML='<option value="">— selecionar —</option>'+(tipo?coresDe(tipo):[]).map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  rcRow(ci,fi);
+}
+function rcRow(ci,fi){
+  const vals=calcRow(ci,fi);
+  vals.forEach((v,j)=>{const e=document.getElementById('c-'+ci+'-'+fi+'-'+j);if(e)e.textContent=v||'—';});
+  const et=document.getElementById('c-'+ci+'-'+fi+'-t');if(et)et.textContent=vals.reduce((a,b)=>a+b,0)||'—';
+  rcSub(ci);updateMeta();
+}
+function rcSub(ci){
+  const s=subCorte(ci);const t=s.reduce((a,b)=>a+b,0);
+  s.forEach((v,j)=>{const e=document.getElementById('sb-'+ci+'-'+j);if(e)e.textContent=v||'—';});
+  const et=document.getElementById('sb-'+ci+'-t');if(et)et.textContent=t||'—';
+  const ch=document.getElementById('sch-'+ci);if(ch)ch.textContent=t+' pç';
+  // Folhas totals per size
+  const fSums=sizes().map(()=>0);
+  const nRows=S.cortes[ci].rows.length;
+  for(let fi=0;fi<nRows;fi++){
+    const f=num(S.cortes[ci].rows[fi].folhas);
+    if(!f)continue;
+    S.grades[ci].vals.forEach((g,j)=>{fSums[j]+=f;});
+  }
+  // Actually total folhas = sum of folhas (not per-size) — show total folhas count
+  let totalFolhas=0;
+  for(let fi=0;fi<nRows;fi++)totalFolhas+=num(S.cortes[ci].rows[fi].folhas);
+  sizes().forEach((_,j)=>{const e=document.getElementById('sf-'+ci+'-'+j);if(e)e.textContent=totalFolhas||'—';});
+  const eft=document.getElementById('sf-'+ci+'-t');if(eft)eft.textContent=totalFolhas||'—';
+  updKgTotal(ci);
+}
+function updKgTotal(ci){
+  let kg=0;
+  const nRows=S.cortes[ci].rows.length;
+  for(let fi=0;fi<nRows;fi++)kg+=num(S.cortes[ci].rows[fi].kgmetro);
+  const fmt=kg>0?kg.toFixed(3):'—';
+  const e1=document.getElementById('sb-'+ci+'-kg');if(e1)e1.textContent=fmt;
+  const e2=document.getElementById('sf-'+ci+'-kg');if(e2)e2.textContent=fmt;
+}
+
+function addCorRow(ci){
+  S.cortes[ci].rows.push({marcacao:'',tipo:'',cor:'',folhas:'',kgmetro:''});
+  // Rebuild just this corte panel
+  const div=document.getElementById('cpanel-'+ci);
+  if(div)div.innerHTML=buildCTable(ci);
+  refreshCorteCalcs(ci);
+  updateMeta();
+}
+function removeCorRow(ci,fi){
+  if(S.cortes[ci].rows.length<=1){toast('Mínimo de 1 linha por corte.');return;}
+  S.cortes[ci].rows.splice(fi,1);
+  const div=document.getElementById('cpanel-'+ci);
+  if(div)div.innerHTML=buildCTable(ci);
+  refreshCorteCalcs(ci);
+  updateMeta();
+}
+function refreshCorteCalcs(ci){
+  const nr=S.cortes[ci].rows.length;
+  for(let fi=0;fi<nr;fi++)rcRow(ci,fi);
+}
+function refreshCalcs(){for(let ci=0;ci<S.grades.length;ci++){const nr=S.cortes[ci].rows.length;for(let fi=0;fi<nr;fi++)rcRow(ci,fi);}}
+function syncDrops(){buildMon();refreshCalcs();}
+
+// ── ABA 3: RESUMO ─────────────────────────────────────────────
+function renderRes(){
+  updateResOPCard();
+  const sz=sizes();
+  const unLabel=S.unidade||'Metros';
+  const tamThs='<th>'+sz.join('</th><th>')+'</th>';
+  document.getElementById('res-thead-corte').innerHTML=
+    `<tr><th style="text-align:left">Corte</th>${tamThs}<th>Total Peças</th><th>${unLabel}</th><th>Rendimento</th></tr>`;
+  document.getElementById('res-thead-cor').innerHTML=
+    `<tr><th style="text-align:left">Tipo</th><th style="text-align:left">Cor / Discriminação</th>${tamThs}<th>Total</th></tr>`;
+  renderResCortes(unLabel);renderResCores();renderResCorcorte();updateMeta();
+}
+function renderResCortes(unLabel){
+  unLabel=unLabel||S.unidade||'Metros';
+  const tb=document.getElementById('tb-rc');tb.innerHTML='';
+  const grand=sizes().map(()=>0);
+  let grandKg=0, grandPecas=0;
+
+  S.grades.forEach((g,ci)=>{
+    const s=subCorte(ci);
+    const totalPecas=s.reduce((a,b)=>a+b,0);
+    s.forEach((v,j)=>grand[j]+=v);
+    grandPecas+=totalPecas;
+
+    // Sum all kgmetro values for this corte
+    let totalKg=0;
+    const nRows=S.cortes[ci].rows.length;
+    for(let fi=0;fi<nRows;fi++) totalKg+=num(S.cortes[ci].rows[fi].kgmetro);
+    grandKg+=totalKg;
+
+    // Rendimento = totalKg / totalPecas (per corte)
+    const rend = totalPecas>0 && totalKg>0 ? (totalKg/totalPecas).toFixed(4) : '—';
+
+    const tr=document.createElement('tr');
+    let h=`<td class="tl">${esc(g.nome)}</td>`;
+    s.forEach(v=>{h+=`<td class="tcalc">${v||'—'}</td>`;});
+    h+=`<td class="ttotal">${totalPecas||'—'}</td>`;
+    h+=`<td class="ttotal" style="color:var(--gr);font-family:var(--fm)">${totalKg>0?totalKg.toFixed(3):'—'}</td>`;
+    h+=`<td class="ttotal" style="color:var(--ad);font-family:var(--fm);font-weight:700">${rend}</td>`;
+    tr.innerHTML=h;tb.appendChild(tr);
+  });
+
+  // Grand total row
+  const gs=grand.reduce((a,b)=>a+b,0);
+  const grandRend = grandPecas>0 && grandKg>0 ? (grandKg/grandPecas).toFixed(4) : '—';
+  const tr=document.createElement('tr');tr.className='rgrand';
+  let h=`<td style="text-align:left">TOTAL GERAL</td>`;
+  grand.forEach(v=>{h+=`<td>${v||'—'}</td>`;});
+  h+=`<td>${gs||'—'}</td>`;
+  h+=`<td style="font-family:var(--fm)">${grandKg>0?grandKg.toFixed(3):'—'}</td>`;
+  h+=`<td style="font-family:var(--fm);font-weight:700">${grandRend}</td>`;
+  tr.innerHTML=h;tb.appendChild(tr);
+}
+function renderResCores(){
+  const tb=document.getElementById('tb-rcor');tb.innerHTML='';
+  const byCor=totalByCor();
+  if(!Object.keys(byCor).length){
+    tb.innerHTML=`<tr class="empty"><td colspan="${sizes().length+3}">Preencha folhas na Montagem para ver os totais por cor.</td></tr>`;return;
+  }
+  const grouped={};
+  Object.entries(byCor).forEach(([k,vals])=>{
+    const[tipo,cor]=k.split('||');
+    if(!grouped[tipo])grouped[tipo]=[];
+    grouped[tipo].push({cor,vals});
+  });
+  const grand=sizes().map(()=>0);
+  Object.entries(grouped).forEach(([tipo,items])=>{
+    const trH=document.createElement('tr');trH.className='rhead';
+    trH.innerHTML=`<td colspan="${sizes().length+3}" style="padding-left:12px">${esc(tipo)}</td>`;
+    tb.appendChild(trH);
+    items.forEach(({cor,vals})=>{
+      const t=vals.reduce((a,b)=>a+b,0);
+      vals.forEach((v,j)=>grand[j]+=v);
+      const tr=document.createElement('tr');tr.className='rcor';
+      let h=`<td class="ts2" style="padding-left:18px">↳ ${esc(tipo)}</td><td class="tl tgr">${esc(cor)}</td>`;
+      vals.forEach(v=>{h+=`<td class="tcalc tgr">${v||'—'}</td>`;});
+      h+=`<td class="ttotal tgr">${t||'—'}</td>`;
+      tr.innerHTML=h;tb.appendChild(tr);
+    });
+  });
+  const gs=grand.reduce((a,b)=>a+b,0);
+  const tr=document.createElement('tr');tr.className='rgrand';
+  let h=`<td colspan="2" style="text-align:left">TOTAL GERAL</td>`;
+  grand.forEach(v=>{h+=`<td>${v||'—'}</td>`;});
+  h+=`<td>${gs||'—'}</td>`;tr.innerHTML=h;tb.appendChild(tr);
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// CATÁLOGO GLOBAL DE TECIDOS
+// ════════════════════════════════════════════════════════════════
+const CAT_KEY = 'provest_catalogo';
+
+function catLoad(){
+  try{const v=localStorage.getItem(CAT_KEY);return v?JSON.parse(v):[];}
+  catch(e){return[];}
+}
+function catSave(data){
+  try{localStorage.setItem(CAT_KEY,JSON.stringify(data));return true;}
+  catch(e){return false;}
+}
+
+// catalog = [{tipo:'PANA', cores:['Azul Marinho','Preto',...]}, ...]
+let _cat = catLoad();
+let _catSelTipo = null; // currently selected tipo name
+
+function catFindTipo(nome){return _cat.find(t=>t.tipo===nome);}
+
+// ── Render tipo list ────────────────────────────────────────
+function renderCatTipos(){
+  const list=document.getElementById('cat-tipo-list');
+  document.getElementById('cat-tipo-count').textContent=_cat.length;
+  if(!_cat.length){
+    list.innerHTML='<div class="cat-empty">Nenhum tipo cadastrado ainda.</div>';
+    return;
+  }
+  list.innerHTML='';
+  _cat.forEach(t=>{
+    const div=document.createElement('div');
+    div.className='tipo-item'+(_catSelTipo===t.tipo?' on':'');
+    div.innerHTML=`<div>
+      <div class="tipo-name">${esc(t.tipo)}</div>
+      <div style="font-family:var(--fm);font-size:.65rem;color:var(--ts);margin-top:1px">${t.cores.length} cor(es)</div>
+    </div>
+    <div style="display:flex;gap:5px;align-items:center">
+      <span class="tipo-count">${t.cores.slice(0,3).map(c=>esc(c)).join(', ')}${t.cores.length>3?'…':''}</span>
+      <button class="btn bd2" style="padding:3px 7px;font-size:.7rem" title="Excluir tipo" onclick="event.stopPropagation();deleteCatTipo('${esc(t.tipo)}')">✕</button>
+    </div>`;
+    div.onclick=()=>selectCatTipo(t.tipo);
+    list.appendChild(div);
+  });
+}
+
+// ── Select tipo → show cores ────────────────────────────────
+function selectCatTipo(nome){
+  _catSelTipo=nome;
+  renderCatTipos();
+  renderCatCores();
+  const btn=document.getElementById('cat-use-btn');
+  if(btn)btn.style.display='';
+}
+
+function renderCatCores(){
+  const t=catFindTipo(_catSelTipo);
+  const titleEl=document.getElementById('cat-cor-title');
+  const body=document.getElementById('cat-cor-body');
+  if(!t){body.innerHTML='<div class="cat-empty">Tipo não encontrado.</div>';return;}
+  titleEl.textContent='Cores — '+t.tipo;
+  let html='<div class="cor-chips">';
+  if(!t.cores.length){
+    html+='<span style="color:var(--ts);font-family:var(--fm);font-size:.72rem;font-style:italic">Nenhuma cor cadastrada.</span>';
+  }else{
+    t.cores.forEach((c,i)=>{
+      html+=`<span class="cor-chip">${esc(c)}<span class="rm" title="Remover" onclick="deleteCatCor('${esc(t.tipo)}',${i})">✕</span></span>`;
+    });
+  }
+  html+='</div>';
+  html+=`<div class="add-cor-row">
+    <input type="text" id="cat-new-cor" placeholder="Nova cor (ex: Azul Royal)" style="flex:1"
+      onkeydown="if(event.key==='Enter')addCatCor()">
+    <button class="btn bp bsm" onclick="addCatCor()">+ Cor</button>
+    <button class="btn bg bsm" onclick="addManyCatCors()" title="Adicionar várias de uma vez">+ Várias</button>
+  </div>`;
+  body.innerHTML=html;
+}
+
+// ── CRUD ────────────────────────────────────────────────────
+function addCatTipo(){
+  const inp=document.getElementById('cat-new-tipo');
+  const nome=inp.value.trim().toUpperCase();
+  if(!nome){toast('Digite o nome do tipo.');return;}
+  if(catFindTipo(nome)){toast('Tipo já cadastrado.');return;}
+  _cat.push({tipo:nome,cores:[]});
+  catSave(_cat);inp.value='';
+  renderCatTipos();selectCatTipo(nome);
+  toast('Tipo "'+nome+'" criado.');
+}
+
+function deleteCatTipo(nome){
+  if(!confirm('Excluir o tipo "'+nome+'" e todas as suas cores?'))return;
+  _cat=_cat.filter(t=>t.tipo!==nome);
+  if(_catSelTipo===nome){_catSelTipo=null;document.getElementById('cat-cor-body').innerHTML='<div class="cat-empty">Selecione um tipo ao lado.</div>';document.getElementById('cat-cor-title').textContent='Selecione um tipo';document.getElementById('cat-use-btn').style.display='none';}
+  catSave(_cat);renderCatTipos();toast('Tipo excluído.');
+}
+
+function addCatCor(){
+  const inp=document.getElementById('cat-new-cor');
+  const nome=inp.value.trim();
+  if(!nome){toast('Digite o nome da cor.');return;}
+  const t=catFindTipo(_catSelTipo);
+  if(!t)return;
+  if(t.cores.includes(nome)){toast('Cor já cadastrada neste tipo.');return;}
+  t.cores.push(nome);
+  catSave(_cat);inp.value='';
+  renderCatCores();renderCatTipos();
+  toast('Cor "'+nome+'" adicionada.');
+}
+
+function addManyCatCors(){
+  const val=prompt('Cole as cores separadas por vírgula ou quebra de linha:\n(ex: Azul Marinho, Preto, Vermelho)');
+  if(!val)return;
+  const t=catFindTipo(_catSelTipo);if(!t)return;
+  const cors=val.split(/[,\n]/).map(c=>c.trim()).filter(c=>c&&!t.cores.includes(c));
+  if(!cors.length){toast('Nenhuma cor nova para adicionar.');return;}
+  t.cores.push(...cors);
+  catSave(_cat);renderCatCores();renderCatTipos();
+  toast(cors.length+' cor(es) adicionada(s).');
+}
+
+function deleteCatCor(tipo,idx){
+  const t=catFindTipo(tipo);if(!t)return;
+  t.cores.splice(idx,1);
+  catSave(_cat);renderCatCores();renderCatTipos();
+  toast('Cor removida.');
+}
+
+// ── Import tipo into current OP ─────────────────────────────
+function importTipoToOP(){
+  const t=catFindTipo(_catSelTipo);if(!t)return;
+  let added=0;
+  t.cores.forEach(cor=>{
+    const exists=S.tecidos.some(x=>x.tipo===t.tipo&&x.cor===cor);
+    if(!exists){S.tecidos.push({tipo:t.tipo,cor});added++;}
+  });
+  if(!added){toast('Todas as cores deste tipo já estão na OP.');return;}
+  renderTec();syncDrops();
+  toast(added+' cor(es) importada(s) para a OP atual.');
+  goTab('cad');
+}
+
+// ── Export / Import catalog ─────────────────────────────────
+function exportCatalog(){
+  if(!_cat.length){toast('Catálogo vazio.');return;}
+  const blob=new Blob([JSON.stringify({version:1,type:'catalogo',exportedAt:Date.now(),catalog:_cat},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='provest_catalogo_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+  toast('Catálogo exportado: '+_cat.length+' tipo(s).');
+}
+function importCatalog(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      const incoming=data.catalog||data;
+      if(!Array.isArray(incoming))throw new Error();
+      let added=0,merged=0;
+      incoming.forEach(item=>{
+        if(!item.tipo)return;
+        const existing=catFindTipo(item.tipo);
+        if(!existing){_cat.push({tipo:item.tipo,cores:item.cores||[]});added++;}
+        else{
+          const newCores=(item.cores||[]).filter(c=>!existing.cores.includes(c));
+          existing.cores.push(...newCores);
+          if(newCores.length)merged++;
+        }
+      });
+      catSave(_cat);renderCatTipos();
+      toast('Importado: '+added+' tipo(s) novo(s), '+merged+' atualizado(s).');
+    }catch(err){toast('Erro ao importar catálogo.');}
+  };
+  reader.readAsText(file);ev.target.value='';
+}
+
+// ── Provide catalog suggestions in OP dropdowns ─────────────
+// Called by addTec to pre-fill from catalog
+function openTipoFromCatalog(){
+  if(!_cat.length){addTec();return;}
+  // Show a simple picker modal
+  const tipos=_cat.map(t=>t.tipo);
+  const sel=prompt('Escolha o tipo do catálogo (ou deixe em branco para digitar manualmente):\n'+tipos.map((t,i)=>(i+1)+'. '+t).join('\n'));
+  if(sel===null)return; // cancelled
+  const idx=parseInt(sel)-1;
+  if(!isNaN(idx)&&_cat[idx]){
+    const t=_cat[idx];
+    t.cores.forEach(cor=>{
+      if(!S.tecidos.some(x=>x.tipo===t.tipo&&x.cor===cor))
+        S.tecidos.push({tipo:t.tipo,cor});
+    });
+    renderTec();syncDrops();
+    toast('Tipo "'+t.tipo+'" com '+t.cores.length+' cor(es) importado.');
+  } else {
+    addTec();
+  }
+}
+
+
+
+
+function updateResOPCard(){
+  const titleEl=document.getElementById('res-op-title');
+  const dateEl=document.getElementById('res-op-date');
+  const fieldsEl=document.getElementById('res-op-fields');
+  if(!titleEl||!fieldsEl)return;
+
+  titleEl.textContent=(S.cliente||'—')+(S.op?' · OP '+S.op:'')+(S.ref?' · REF '+S.ref:'');
+  dateEl.textContent=S.data?'Data: '+S.data:'';
+
+  const fields=[
+    {label:'Nome do Cliente',    val:S.cliente||'—',       mono:false, hl:true},
+    {label:'Referência',         val:S.ref||'—',           mono:true,  hl:false},
+    {label:'OP',                 val:S.op||'—',            mono:true,  hl:false},
+    {label:'Previsão de Entrega',val:S.entrega?new Date(S.entrega+'T00:00:00').toLocaleDateString('pt-BR'):'—', mono:false, hl:false},
+    {label:'Rendimento',         val:S.rendimento||'—',    mono:true,  hl:false},
+    {label:'Cortador',           val:S.cortador||'—',      mono:false, hl:false},
+    {label:'Enfestador',         val:S.enfestador||'—',    mono:false, hl:false},
+    {label:'Marca do Tecido',    val:S.marcaTecido||'—',   mono:false, hl:false},
+    {label:'Largura do Tecido',  val:S.larguraTecido?(S.larguraTecido+' m'):'—', mono:true, hl:false},
+    {label:'Largura Forro',      val:S.larguraForro?(S.larguraForro+' m'):'—',   mono:true, hl:false},
+  ];
+
+  fieldsEl.innerHTML=fields.map(f=>
+    `<div class="res-hfield${f.hl?' res-hfield-hl':''}">
+      <span class="res-hfield-label">${esc(f.label)}</span>
+      <span class="res-hfield-val${f.mono?' mono':''}">${esc(f.val)}</span>
+    </div>`
+  ).join('');
+}
+
+// ── Resumo: Total por Cor × Corte ───────────────────────────
+function renderResCorcorte(){
+  const sz=sizes();
+  const tamThs='<th>'+sz.join('</th><th>')+'</th>';
+
+  const unLabel=S.unidade||'Metros';
+  document.getElementById('res-thead-corcorte').innerHTML=
+    `<tr>
+      <th style="text-align:left">Tipo de Tecido</th>
+      <th style="text-align:left">Cor / Discriminação</th>
+      <th style="text-align:left">Folhas</th>
+      <th>Qtd Folhas</th>
+      <th>${unLabel}</th>
+      ${tamThs}
+      <th>Total</th>
+    </tr>`;
+
+  const tb=document.getElementById('tb-rcorcorte');
+  tb.innerHTML='';
+
+  // Build: { 'tipo||cor': { 'CORTE 01': {folhas, kg, vals[]}, ... } }
+  const map={};
+  for(let ci=0;ci<S.grades.length;ci++){
+    const nRows=S.cortes[ci].rows.length;
+    for(let fi=0;fi<nRows;fi++){
+      const r=S.cortes[ci].rows[fi];
+      if(!r.tipo||!r.cor)continue;
+      const k=r.tipo+'||'+r.cor;
+      if(!map[k])map[k]={};
+      const cn=S.grades[ci].nome;
+      if(!map[k][cn])map[k][cn]={folhas:0,kg:0,vals:sz.map(()=>0)};
+      const f=num(r.folhas);
+      map[k][cn].folhas+=f;
+      map[k][cn].kg+=num(r.kgmetro);
+      calcRow(ci,fi).forEach((v,j)=>map[k][cn].vals[j]+=v);
+    }
+  }
+
+  if(!Object.keys(map).length){
+    tb.innerHTML=`<tr class="empty"><td colspan="${sz.length+7}">Preencha a Montagem para ver os dados aqui.</td></tr>`;
+    return;
+  }
+
+  // Group by tipo
+  const grouped={};
+  Object.entries(map).forEach(([k,cortes])=>{
+    const [tipo,cor]=k.split('||');
+    if(!grouped[tipo])grouped[tipo]=[];
+    grouped[tipo].push({cor,cortes});
+  });
+
+  const grand={folhas:0,kg:0,vals:sz.map(()=>0)};
+
+  Object.entries(grouped).forEach(([tipo,items])=>{
+    // Tipo header
+    const trH=document.createElement('tr');trH.className='rhead';
+    trH.innerHTML=`<td colspan="${sz.length+7}" style="padding-left:12px">${esc(tipo)}</td>`;
+    tb.appendChild(trH);
+
+    items.forEach(({cor,cortes})=>{
+      // Cor sub-total across all cortes for this cor
+      const corTot={folhas:0,kg:0,vals:sz.map(()=>0)};
+
+      Object.entries(cortes).forEach(([corteName,d],idx)=>{
+        corTot.folhas+=d.folhas;corTot.kg+=d.kg;
+        d.vals.forEach((v,j)=>corTot.vals[j]+=v);
+        grand.folhas+=d.folhas;grand.kg+=d.kg;
+        d.vals.forEach((v,j)=>grand.vals[j]+=v);
+
+        const tr=document.createElement('tr');
+        tr.style.background=idx%2===0?'var(--il)':'var(--wh)';
+        const rowTotal=d.vals.reduce((a,b)=>a+b,0);
+        let h=idx===0
+          ? `<td class="tl" style="color:var(--gr);padding-left:18px" rowspan="${Object.keys(cortes).length}">↳ ${esc(cor)}</td>`
+          : '';
+        h+=`<td style="font-family:var(--fm);font-size:.72rem;color:var(--ts)">${esc(corteName)}</td>`;
+        h+=`<td style="font-family:var(--fm);font-size:.78rem;text-align:center">${d.folhas||'—'}</td>`;
+        h+=`<td style="font-family:var(--fm);font-size:.78rem;color:var(--gr);text-align:center">${d.kg>0?d.kg.toFixed(3):'—'}</td>`;
+        d.vals.forEach(v=>{h+=`<td class="tcalc">${v||'—'}</td>`;});
+        h+=`<td class="ttotal">${rowTotal||'—'}</td>`;
+        tr.innerHTML=h;tb.appendChild(tr);
+      });
+
+      // Cor subtotal row (if more than 1 corte)
+      if(Object.keys(cortes).length>1){
+        const tr=document.createElement('tr');tr.className='rcor';
+        const corTotal=corTot.vals.reduce((a,b)=>a+b,0);
+        let h=`<td class="tl tgr" colspan="2" style="padding-left:18px;font-size:.75rem">Subtotal ${esc(cor)}</td>`;
+        h+=`<td style="font-family:var(--fm);font-weight:700;color:var(--gr);text-align:center">${corTot.folhas||'—'}</td>`;
+        h+=`<td style="font-family:var(--fm);font-weight:700;color:var(--gr);text-align:center">${corTot.kg>0?corTot.kg.toFixed(3):'—'}</td>`;
+        corTot.vals.forEach(v=>{h+=`<td class="tcalc tgr">${v||'—'}</td>`;});
+        h+=`<td class="ttotal tgr">${corTotal||'—'}</td>`;
+        tr.innerHTML=h;tb.appendChild(tr);
+      }
+    });
+  });
+
+  // Grand total
+  const tr=document.createElement('tr');tr.className='rgrand';
+  const gs=grand.vals.reduce((a,b)=>a+b,0);
+  let h=`<td colspan="2" style="text-align:left">TOTAL GERAL</td>`;
+  h+=`<td>${grand.folhas||'—'}</td>`;
+  h+=`<td>${grand.kg>0?grand.kg.toFixed(3):'—'}</td>`;
+  grand.vals.forEach(v=>{h+=`<td>${v||'—'}</td>`;});
+  h+=`<td>${gs||'—'}</td>`;
+  tr.innerHTML=h;tb.appendChild(tr);
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+function init(){
+  S.id=uid();
+  document.getElementById('f-data').value=S.data;
+  document.getElementById('f-cliente').value=S.cliente;
+  document.getElementById('f-op').value=S.op;
+  document.getElementById('f-ref').value=S.ref;
+  syncHeader();setGradeType(1,false);setUnidade(S.unidade||'Metros');
+  renderTec();renderGrades();buildMon();refreshCalcs();renderDB();
+  renderCatTipos();
+}
+init();
+</script>
+</body>
+</html>
