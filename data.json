@@ -1,0 +1,899 @@
+{
+  "version": 1,
+  "exportedAt": 1780508860526,
+  "ops": [
+    {
+      "id": "mpyc7ac6pn61",
+      "cliente": "KOLI",
+      "op": "999",
+      "ref": "990",
+      "data": "2026-06-03",
+      "desc": "PEDIDO PARA SAO JOAO",
+      "obs": "",
+      "gradeType": 3,
+      "tecidos": [
+        {
+          "tipo": "PANA",
+          "cor": "AZUL"
+        },
+        {
+          "tipo": "OXFORD",
+          "cor": "PRETO"
+        },
+        {
+          "tipo": "PANA",
+          "cor": "AMARELO"
+        },
+        {
+          "tipo": "PANA",
+          "cor": "ROSA"
+        }
+      ],
+      "grades": [
+        {
+          "nome": "CORTE 01",
+          "vals": [
+            10,
+            40,
+            50,
+            50,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 02",
+          "vals": [
+            20,
+            13,
+            18,
+            26,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 03",
+          "vals": [
+            30,
+            25,
+            36,
+            0,
+            0,
+            0,
+            60,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 04",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "cortes": [
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ]
+      ],
+      "savedAt": 1780507689032
+    },
+    {
+      "id": "mpycowvs5e2c",
+      "cliente": "MAHALO",
+      "op": "500",
+      "ref": "BEAD1050053",
+      "data": "2026-06-03",
+      "desc": "BERMUDA CHINO ELASTICO ",
+      "obs": "OP MAHALO PREVISÃO DE ENTREGA 30/07/26",
+      "gradeType": 1,
+      "tecidos": [
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Azul Marinho"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Preto"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Vermelho"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Amarelo"
+        }
+      ],
+      "grades": [
+        {
+          "nome": "CORTE 01",
+          "vals": [
+            0,
+            1,
+            2,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 02",
+          "vals": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 03",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 04",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "cortes": [
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ]
+      ],
+      "savedAt": 1780508597357
+    },
+    {
+      "id": "mpybuh6lihrb",
+      "cliente": "MAHALO",
+      "op": "123",
+      "ref": "REF9999999",
+      "grade_tipo": "Adulto Masculino",
+      "data": "2026-06-03",
+      "tecidos": [
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Azul Marinho"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Preto"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Vermelho"
+        },
+        {
+          "tipo": "OXFORD",
+          "cor": "PRETO"
+        }
+      ],
+      "grades": [
+        {
+          "nome": "CORTE 01",
+          "vals": [
+            0,
+            2,
+            3,
+            4,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 02",
+          "vals": [
+            0,
+            2,
+            3,
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 03",
+          "vals": [
+            0,
+            5,
+            4,
+            0,
+            0,
+            0,
+            3,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "nome": "CORTE 04",
+          "vals": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "cortes": [
+        [
+          {
+            "tipo": "RENAUVIEW PANA",
+            "cor": "Azul Marinho",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "RENAUVIEW PANA",
+            "cor": "Azul Marinho",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "RENAUVIEW PANA",
+            "cor": "Azul Marinho",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "RENAUVIEW PANA",
+            "cor": "Azul Marinho",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ]
+      ],
+      "savedAt": 1780507052512
+    }
+  ]
+}
