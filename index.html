@@ -1490,7 +1490,26 @@ function init(){
   syncHeader();setGradeType(1,false);setUnidade(S.unidade||'Metros');
   renderTec();renderGrades();buildMon();refreshCalcs();renderDB();
   renderCatTipos();
+  loadDataJson();
 }
+
+function loadDataJson(){
+  fetch('data.json?_='+Date.now())
+    .then(r=>{if(!r.ok)throw new Error('sem arquivo');return r.json();})
+    .then(data=>{
+      const ops=data.ops||data;
+      if(!Array.isArray(ops))return;
+      let imported=0;
+      ops.forEach(op=>{
+        if(!op.id)return;
+        const existing=lsGet(op.id);
+        if(!existing||op.savedAt>existing.savedAt){lsSave(op);imported++;}
+      });
+      if(imported>0){renderDB();toast('Histórico carregado do GitHub: '+imported+' OP(s) nova(s).');}
+    })
+    .catch(()=>{});
+}
+
 init();
 </script>
 </body>
