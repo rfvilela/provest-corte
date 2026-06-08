@@ -697,13 +697,25 @@ function goTab(name){
     document.getElementById('panel-'+t).classList.toggle('on',t===name);
     document.querySelectorAll('.ntab')[i].classList.toggle('on',t===name);
   });
-  if(name==='res'){renderRes();}
+  if(name==='res'){syncFieldsToS();renderRes();}
   updateMeta();
 }
 
 // ── PRINT ──────────────────────────────────────────────────────
+function syncFieldsToS(){
+  S.desc=document.getElementById('f-desc').value;
+  S.obs=document.getElementById('f-obs').value;
+  S.entrega=document.getElementById('f-entrega').value;
+  S.rendimento=document.getElementById('f-rendimento').value;
+  S.cortador=document.getElementById('f-cortador').value;
+  S.enfestador=document.getElementById('f-enfestador').value;
+  S.marcaTecido=document.getElementById('f-marca-tecido').value;
+  S.larguraTecido=document.getElementById('f-largura-tecido').value;
+  S.larguraForro=document.getElementById('f-largura-forro').value;
+}
+
 function printResumo(){
-  renderRes();
+  syncFieldsToS();renderRes();
   setTimeout(()=>window.print(),120);
 }
 
