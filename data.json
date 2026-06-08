@@ -1,300 +1,7 @@
 {
   "version": 1,
-  "exportedAt": 1780508860526,
+  "exportedAt": 1780925426575,
   "ops": [
-    {
-      "id": "mpyc7ac6pn61",
-      "cliente": "KOLI",
-      "op": "999",
-      "ref": "990",
-      "data": "2026-06-03",
-      "desc": "PEDIDO PARA SAO JOAO",
-      "obs": "",
-      "gradeType": 3,
-      "tecidos": [
-        {
-          "tipo": "PANA",
-          "cor": "AZUL"
-        },
-        {
-          "tipo": "OXFORD",
-          "cor": "PRETO"
-        },
-        {
-          "tipo": "PANA",
-          "cor": "AMARELO"
-        },
-        {
-          "tipo": "PANA",
-          "cor": "ROSA"
-        }
-      ],
-      "grades": [
-        {
-          "nome": "CORTE 01",
-          "vals": [
-            10,
-            40,
-            50,
-            50,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "nome": "CORTE 02",
-          "vals": [
-            20,
-            13,
-            18,
-            26,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "nome": "CORTE 03",
-          "vals": [
-            30,
-            25,
-            36,
-            0,
-            0,
-            0,
-            60,
-            0
-          ]
-        },
-        {
-          "nome": "CORTE 04",
-          "vals": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        }
-      ],
-      "cortes": [
-        [
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          }
-        ],
-        [
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          }
-        ],
-        [
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          }
-        ],
-        [
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          },
-          {
-            "tipo": "",
-            "cor": "",
-            "folhas": ""
-          }
-        ]
-      ],
-      "savedAt": 1780507689032
-    },
     {
       "id": "mpycowvs5e2c",
       "cliente": "MAHALO",
@@ -595,6 +302,1629 @@
         ]
       ],
       "savedAt": 1780508597357
+    },
+    {
+      "id": "mpyc7ac6pn61",
+      "cliente": "KOLI",
+      "op": "999",
+      "ref": "990",
+      "data": "2026-06-03",
+      "desc": "PEDIDO PARA SAO JOAO",
+      "obs": "",
+      "gradeType": 3,
+      "tecidos": [
+        {
+          "tipo": "PANA",
+          "cor": "AZUL"
+        },
+        {
+          "tipo": "OXFORD",
+          "cor": "PRETO"
+        },
+        {
+          "tipo": "PANA",
+          "cor": "AMARELO"
+        },
+        {
+          "tipo": "PANA",
+          "cor": "ROSA"
+        }
+      ],
+      "grades": [
+        {
+          "nome": "CORTE 01",
+          "vals": [
+            10,
+            40,
+            50,
+            50,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 02",
+          "vals": [
+            20,
+            13,
+            18,
+            26,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 03",
+          "vals": [
+            30,
+            25,
+            36,
+            0,
+            0,
+            0,
+            60,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 04",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "cortes": [
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ],
+        [
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          },
+          {
+            "tipo": "",
+            "cor": "",
+            "folhas": ""
+          }
+        ]
+      ],
+      "savedAt": 1780507689032
+    },
+    {
+      "id": "mq1nw47uqcno",
+      "cliente": "MAHALO",
+      "op": "999",
+      "ref": "BEAD1050053",
+      "data": "2026-06-06",
+      "desc": "bermuda chino",
+      "obs": "nenhuma observação",
+      "gradeType": 2,
+      "tecidos": [
+        {
+          "tipo": "CEDRO",
+          "cor": "Preto"
+        },
+        {
+          "tipo": "CEDRO",
+          "cor": "Vermelho"
+        }
+      ],
+      "grades": [
+        {
+          "nome": "CORTE 01",
+          "vals": [
+            5,
+            10,
+            15,
+            6,
+            20,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 02",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 03",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 04",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "cortes": [
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        },
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        },
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        },
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        }
+      ],
+      "unidade": "Metros",
+      "savedAt": 1780922970680,
+      "entrega": "",
+      "rendimento": "",
+      "cortador": "Maria",
+      "enfestador": "Joaozinho",
+      "marcaTecido": "TextilFio",
+      "larguraTecido": "1.50",
+      "larguraForro": "1.40"
+    },
+    {
+      "id": "mq58xcj7v6rl",
+      "cliente": "MAHALO",
+      "op": "453",
+      "ref": "BEAD1050053",
+      "data": "2026-06-08",
+      "desc": "",
+      "obs": "",
+      "gradeType": 1,
+      "tecidos": [
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Azul Marinho"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Preto"
+        },
+        {
+          "tipo": "RENAUVIEW PANA",
+          "cor": "Vermelho"
+        }
+      ],
+      "grades": [
+        {
+          "nome": "CORTE 01",
+          "vals": [
+            0,
+            4,
+            2,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 02",
+          "vals": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "nome": "CORTE 03",
+          "vals": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "nome": "CORTE 04",
+          "vals": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "cortes": [
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "RENAUVIEW PANA",
+              "cor": "Azul Marinho",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        },
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "RENAUVIEW PANA",
+              "cor": "Azul Marinho",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        },
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "RENAUVIEW PANA",
+              "cor": "Azul Marinho",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        },
+        {
+          "rows": [
+            {
+              "marcacao": "",
+              "tipo": "RENAUVIEW PANA",
+              "cor": "Azul Marinho",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            },
+            {
+              "marcacao": "",
+              "tipo": "",
+              "cor": "",
+              "folhas": "",
+              "kgmetro": ""
+            }
+          ]
+        }
+      ],
+      "unidade": "Metros",
+      "entrega": "",
+      "rendimento": "1.85",
+      "cortador": "Renan Carvalho",
+      "enfestador": "Germana Banana",
+      "marcaTecido": "OXFORD",
+      "larguraTecido": "1.60",
+      "larguraForro": "1.49",
+      "savedAt": 1780925361758
     },
     {
       "id": "mpybuh6lihrb",
