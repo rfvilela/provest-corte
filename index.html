@@ -963,7 +963,7 @@ function buildCorRow(ci,fi){
   const corsOpts=(r.tipo?coresDe(r.tipo):S.tecidos.map(t=>t.cor))
     .map(c=>`<option value="${esc(c)}"${r.cor===c?' selected':''}>${esc(c)}</option>`).join('');
   const vals=calcRow(ci,fi);const rt=vals.reduce((a,b)=>a+b,0);
-  const marcOpts=Array.from({length:20},(_,i)=>
+  const marcOpts=Array.from({length:99},(_,i)=>
     `<option value="${i+1}"${r.marcacao==i+1?' selected':''}>${i+1}</option>`).join('');
   let h=`<tr>
     <td style="width:54px;padding:4px 6px">
