@@ -124,7 +124,6 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 /* DB toolbar */
 .db-toolbar{display:flex;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bl);background:var(--il);flex-wrap:wrap}
 /* import hidden input */
-#import-input{display:none}
 
 
 
@@ -327,22 +326,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   <div class="sh">
     <div><div class="ss">BANCO DE DADOS</div><div class="st">Histórico de OPs</div></div>
     <div class="ml">
-      <button class="btn bgreen bsm" onclick="exportDB()">⬇ Exportar histórico</button>
-      <button class="btn bg bsm" onclick="document.getElementById('import-input').click()">⬆ Importar histórico</button>
-      <input type="file" id="import-input" accept=".json" onchange="importDB(event)">
       <button class="btn bp bsm" onclick="newOP()">+ Nova OP</button>
-    </div>
-  </div>
-
-  <!-- INFO BANNER -->
-  <div style="background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.3);border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
-    <span style="font-size:1.2rem">💾</span>
-    <div>
-      <div style="font-family:var(--fh);font-size:.78rem;font-weight:700;color:var(--gr)">Como salvar o histórico permanentemente</div>
-      <div style="font-family:var(--fm);font-size:.68rem;color:var(--tm);margin-top:2px">
-        Clique em <strong>⬇ Exportar histórico</strong> para baixar um arquivo <code>.json</code> com todas as OPs.
-        Para restaurar em outro computador ou após limpar o navegador, use <strong>⬆ Importar histórico</strong>.
-      </div>
     </div>
   </div>
 
@@ -617,47 +601,6 @@ async function syncWithSupabase(){
     lsAll().forEach(op=>{if(!remoteIds.has(op.id))sbUpsert(op);});
     if(imported>0){renderDB();toast('Histórico sincronizado: '+imported+' OP(s) atualizada(s).');}
   }catch(e){console.error('Erro ao sincronizar:',e);}
-}
-
-// ── EXPORT / IMPORT ────────────────────────────────────────────
-function exportDB(){
-  const ops=lsAll();
-  if(!ops.length){toast('Nenhuma OP para exportar.');return;}
-  const blob=new Blob([JSON.stringify({version:1,exportedAt:Date.now(),ops},null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='provest_historico_'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Histórico exportado: '+ops.length+' OP(s).');
-}
-
-function importDB(ev){
-  const file=ev.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      const ops=data.ops||data; // accept array or wrapped object
-      if(!Array.isArray(ops))throw new Error('Formato inválido');
-      let imported=0,skipped=0;
-      ops.forEach(op=>{
-        if(!op.id)return;
-        const existing=lsGet(op.id);
-        // Merge: keep newer version
-        if(!existing||op.savedAt>existing.savedAt){lsSave(op);imported++;}
-        else skipped++;
-      });
-      renderDB();
-      toast(`Importado: ${imported} OP(s) adicionada(s), ${skipped} já existia(m).`);
-    }catch(err){
-      toast('Erro ao importar: arquivo inválido.');
-    }
-  };
-  reader.readAsText(file);
-  ev.target.value=''; // reset so same file can be re-imported
 }
 
 // ── UTILS ──────────────────────────────────────────────────────
