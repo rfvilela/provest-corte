@@ -572,10 +572,52 @@ S.cortes.forEach(c=>{if(S.tecidos[0]){c.rows[0].tipo=S.tecidos[0].tipo;c.rows[0]
 // ── LOCALSTORAGE ───────────────────────────────────────────────
 const LS_PREFIX='provest_op_';
 function lsKeys(){return Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX));}
-function lsSave(data){try{localStorage.setItem(LS_PREFIX+data.id,JSON.stringify(data));return true;}catch(e){return false;}}
+function lsSaveLocal(data){try{localStorage.setItem(LS_PREFIX+data.id,JSON.stringify(data));return true;}catch(e){return false;}}
+function lsSave(data){const ok=lsSaveLocal(data);if(ok)sbUpsert(data);return ok;}
 function lsGet(id){try{const v=localStorage.getItem(LS_PREFIX+id);return v?JSON.parse(v):null;}catch(e){return null;}}
-function lsDel(id){try{localStorage.removeItem(LS_PREFIX+id);return true;}catch(e){return false;}}
+function lsDel(id){try{localStorage.removeItem(LS_PREFIX+id);sbDelete(id);return true;}catch(e){return false;}}
 function lsAll(){return lsKeys().map(k=>lsGet(k.replace(LS_PREFIX,''))).filter(Boolean);}
+
+// ── SUPABASE SYNC ────────────────────────────────────────────────
+const SB_URL='https://iidcezkfzskncmbvnlxv.supabase.co';
+const SB_KEY='sb_publishable_XOyLqwSxKaNrQsexBuX8Bg_Unc5nNgV';
+const SB_HEADERS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+
+async function sbUpsert(op){
+  try{
+    await fetch(SB_URL+'/rest/v1/ops?on_conflict=id',{
+      method:'POST',
+      headers:{...SB_HEADERS,'Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({id:op.id,cliente:op.cliente||'',op:op.op||'',data:op,saved_at:op.savedAt||Date.now()})
+    });
+  }catch(e){console.error('Erro ao sincronizar:',e);}
+}
+
+async function sbDelete(id){
+  try{
+    await fetch(SB_URL+'/rest/v1/ops?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:SB_HEADERS});
+  }catch(e){console.error('Erro ao excluir remoto:',e);}
+}
+
+async function syncWithSupabase(){
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/ops?select=data,saved_at',{headers:SB_HEADERS});
+    if(!r.ok)return;
+    const rows=await r.json();
+    let imported=0;
+    const remoteIds=new Set();
+    rows.forEach(row=>{
+      const op=row.data;
+      if(!op||!op.id)return;
+      remoteIds.add(op.id);
+      const existing=lsGet(op.id);
+      if(!existing||(op.savedAt||0)>(existing.savedAt||0)){lsSaveLocal(op);imported++;}
+    });
+    // envia para o banco as OPs locais que ainda não estão na nuvem
+    lsAll().forEach(op=>{if(!remoteIds.has(op.id))sbUpsert(op);});
+    if(imported>0){renderDB();toast('Histórico sincronizado: '+imported+' OP(s) atualizada(s).');}
+  }catch(e){console.error('Erro ao sincronizar:',e);}
+}
 
 // ── EXPORT / IMPORT ────────────────────────────────────────────
 function exportDB(){
@@ -1512,24 +1554,7 @@ function init(){
   syncHeader();setGradeType(1,false);setUnidade(S.unidade||'Metros');
   renderTec();renderGrades();buildMon();refreshCalcs();renderDB();
   renderCatTipos();
-  loadDataJson();
-}
-
-function loadDataJson(){
-  fetch('data.json?_='+Date.now())
-    .then(r=>{if(!r.ok)throw new Error('sem arquivo');return r.json();})
-    .then(data=>{
-      const ops=data.ops||data;
-      if(!Array.isArray(ops))return;
-      let imported=0;
-      ops.forEach(op=>{
-        if(!op.id)return;
-        const existing=lsGet(op.id);
-        if(!existing||op.savedAt>existing.savedAt){lsSave(op);imported++;}
-      });
-      if(imported>0){renderDB();toast('Histórico carregado do GitHub: '+imported+' OP(s) nova(s).');}
-    })
-    .catch(()=>{});
+  syncWithSupabase();
 }
 
 init();
