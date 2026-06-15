@@ -8,13 +8,15 @@ create table if not exists ops (
   updated_at timestamptz default now()
 );
 
--- Permite acesso público de leitura/escrita (uso interno, sem login)
+-- Exige login (usuário autenticado) para ler/escrever
 alter table ops enable row level security;
 
-create policy "Acesso público total" on ops
+drop policy if exists "Acesso público total" on ops;
+
+create policy "Acesso autenticado" on ops
   for all
-  using (true)
-  with check (true);
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
 
 -- Tabela do catálogo global de tecidos
 create table if not exists catalog (
@@ -27,7 +29,9 @@ insert into catalog (id, data) values ('global', '[]') on conflict (id) do nothi
 
 alter table catalog enable row level security;
 
-create policy "Acesso público total catalog" on catalog
+drop policy if exists "Acesso público total catalog" on catalog;
+
+create policy "Acesso autenticado catalog" on catalog
   for all
-  using (true)
-  with check (true);
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
