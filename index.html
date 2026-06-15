@@ -212,7 +212,6 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 .add-tipo-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--bl);background:var(--il)}
 .cat-empty{padding:32px 16px;text-align:center;color:var(--ts);font-family:var(--fm);font-size:.75rem;font-style:italic}
 .cat-info{background:rgba(45,106,79,.08);border:1px solid rgba(45,106,79,.25);border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px;font-family:var(--fm);font-size:.7rem;color:var(--tm);line-height:1.5}
-.import-btn-area{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
 /* ── PRINT STYLES ─────────────────────────── */
 @media print{
@@ -281,11 +280,6 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 <div id="panel-cat" class="panel">
   <div class="sh">
     <div><div class="ss">CATÁLOGO GLOBAL · REUTILIZÁVEL EM TODAS AS OPs</div><div class="st">Tecidos &amp; Cores</div></div>
-    <div class="ml">
-      <button class="btn bgreen bsm" onclick="exportCatalog()">⬇ Exportar catálogo</button>
-      <button class="btn bg bsm" onclick="document.getElementById('cat-import-input').click()">⬆ Importar catálogo</button>
-      <input type="file" id="cat-import-input" accept=".json" onchange="importCatalog(event)" style="display:none">
-    </div>
   </div>
 
   <div class="cat-info">
@@ -1156,8 +1150,39 @@ function catLoad(){
   catch(e){return[];}
 }
 function catSave(data){
-  try{localStorage.setItem(CAT_KEY,JSON.stringify(data));return true;}
+  try{localStorage.setItem(CAT_KEY,JSON.stringify(data));sbCatSave(data);return true;}
   catch(e){return false;}
+}
+
+async function sbCatLoad(){
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/catalog?id=eq.global&select=data',{headers:SB_HEADERS});
+    if(!r.ok)return null;
+    const rows=await r.json();
+    return rows[0]?rows[0].data:null;
+  }catch(e){return null;}
+}
+
+async function sbCatSave(data){
+  try{
+    await fetch(SB_URL+'/rest/v1/catalog?on_conflict=id',{
+      method:'POST',
+      headers:{...SB_HEADERS,'Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({id:'global',data})
+    });
+  }catch(e){console.error('Erro ao sincronizar catálogo:',e);}
+}
+
+async function syncCatalogWithSupabase(){
+  const remote=await sbCatLoad();
+  if(Array.isArray(remote)&&remote.length){
+    _cat=remote;
+    localStorage.setItem(CAT_KEY,JSON.stringify(_cat));
+    renderCatTipos();
+    if(_catSelTipo)renderCatCores();
+  }else if(_cat.length){
+    sbCatSave(_cat);
+  }
 }
 
 // catalog = [{tipo:'PANA', cores:['Azul Marinho','Preto',...]}, ...]
@@ -1288,41 +1313,6 @@ function importTipoToOP(){
   goTab('cad');
 }
 
-// ── Export / Import catalog ─────────────────────────────────
-function exportCatalog(){
-  if(!_cat.length){toast('Catálogo vazio.');return;}
-  const blob=new Blob([JSON.stringify({version:1,type:'catalogo',exportedAt:Date.now(),catalog:_cat},null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='provest_catalogo_'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();URL.revokeObjectURL(url);
-  toast('Catálogo exportado: '+_cat.length+' tipo(s).');
-}
-function importCatalog(ev){
-  const file=ev.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      const incoming=data.catalog||data;
-      if(!Array.isArray(incoming))throw new Error();
-      let added=0,merged=0;
-      incoming.forEach(item=>{
-        if(!item.tipo)return;
-        const existing=catFindTipo(item.tipo);
-        if(!existing){_cat.push({tipo:item.tipo,cores:item.cores||[]});added++;}
-        else{
-          const newCores=(item.cores||[]).filter(c=>!existing.cores.includes(c));
-          existing.cores.push(...newCores);
-          if(newCores.length)merged++;
-        }
-      });
-      catSave(_cat);renderCatTipos();
-      toast('Importado: '+added+' tipo(s) novo(s), '+merged+' atualizado(s).');
-    }catch(err){toast('Erro ao importar catálogo.');}
-  };
-  reader.readAsText(file);ev.target.value='';
-}
 
 // ── Provide catalog suggestions in OP dropdowns ─────────────
 // Called by addTec to pre-fill from catalog
@@ -1498,6 +1488,7 @@ function init(){
   renderTec();renderGrades();buildMon();refreshCalcs();renderDB();
   renderCatTipos();
   syncWithSupabase();
+  syncCatalogWithSupabase();
 }
 
 init();
