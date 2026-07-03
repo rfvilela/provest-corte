@@ -272,6 +272,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon .tw{overflow:visible!important}
   body.print-mon table{page-break-inside:auto;width:100%}
   body.print-mon tr{page-break-inside:avoid}
+  body.print-mon tr.empty-row{display:none!important}
   body.print-mon .tsub td{background:#2e2e2e!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .rgrade td{background:#e8e8e8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   @page{margin:1cm;size:A4 landscape}
@@ -518,6 +519,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
     <div class="ml">
       <span class="chip-grade" id="chip-grade-type">Tipo 1</span>
       <span class="chip cha" id="chip-total">0 peças</span>
+      <button class="btn bp bsm" onclick="saveCurrentOP()">💾 Salvar OP</button>
       <button class="btn bg bsm" onclick="printMontagem()">🖨 Imprimir Montagem</button>
     </div>
   </div>
@@ -1072,7 +1074,7 @@ function buildCorRow(ci,fi){
   const vals=calcRow(ci,fi);const rt=vals.reduce((a,b)=>a+b,0);
   const marcOpts=Array.from({length:99},(_,i)=>
     `<option value="${i+1}"${r.marcacao==i+1?' selected':''}>${i+1}</option>`).join('');
-  let h=`<tr>
+  let h=`<tr${(!r.tipo&&!r.cor&&!r.folhas)?' class="empty-row"':''}>
     <td style="width:54px;padding:4px 6px">
       <select id="sm-${ci}-${fi}" style="width:54px;text-align:center;font-family:var(--fm);font-weight:700;color:var(--n)"
         onchange="S.cortes[${ci}].rows[${fi}].marcacao=parseInt(this.value)||'';updateMeta()">
