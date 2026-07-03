@@ -853,12 +853,38 @@ function showDetail(data,el){
       <div class="detail-label" style="margin-bottom:4px">Observação</div>
       <div style="font-family:var(--fb);font-size:.8rem;color:var(--tm);background:var(--il);border-radius:4px;padding:8px 10px;border:1px solid var(--bl)">${esc(data.obs)}</div>
     </div>`:''}
-    <div style="border-top:1px solid var(--bl);padding-top:10px">
+    <div style="border-top:1px solid var(--bl);padding-top:10px;margin-bottom:10px">
       <div class="detail-label" style="margin-bottom:6px">Tecidos Cadastrados</div>
       <div style="display:flex;flex-wrap:wrap;gap:5px">
         ${[...new Set((data.tecidos||[]).map(t=>t.tipo+'||'+t.cor))].map(k=>{const[tipo,cor]=k.split('||');return`<span class="chip chn">${esc(tipo)} · ${esc(cor)}</span>`;}).join('')||'<span style="color:var(--ts);font-size:.72rem;font-family:var(--fm)">—</span>'}
       </div>
     </div>
+    ${(()=>{
+      if(!data.grades||!data.cortes)return'';
+      return(data.grades||[]).map((g,ci)=>{
+        const rows=(Array.isArray(data.cortes[ci])?data.cortes[ci]:(data.cortes[ci]&&data.cortes[ci].rows)||[]).filter(r=>r&&r.tipo&&r.cor);
+        if(!rows.length)return'';
+        const gradeStr=sz.map((s,j)=>`${s}:${(g.vals||[])[j]||0}`).join(' ');
+        return`<div style="border-top:1px solid var(--bl);padding-top:8px;margin-bottom:8px">
+          <div class="detail-label" style="margin-bottom:4px">${esc(g.nome||'Corte '+(ci+1))}</div>
+          <div style="font-family:var(--fm);font-size:.65rem;color:var(--ts);margin-bottom:6px">${gradeStr}</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.7rem;font-family:var(--fm)">
+            <thead><tr style="background:var(--il)">
+              <th style="padding:3px 6px;text-align:left;border:1px solid var(--bl)">Marcação</th>
+              <th style="padding:3px 6px;text-align:left;border:1px solid var(--bl)">Tecido</th>
+              <th style="padding:3px 6px;text-align:left;border:1px solid var(--bl)">Cor</th>
+              <th style="padding:3px 6px;text-align:center;border:1px solid var(--bl)">Folhas</th>
+            </tr></thead>
+            <tbody>${rows.map(r=>`<tr>
+              <td style="padding:3px 6px;border:1px solid var(--bl);text-align:center">${r.marcacao||'—'}</td>
+              <td style="padding:3px 6px;border:1px solid var(--bl)">${esc(r.tipo||'—')}</td>
+              <td style="padding:3px 6px;border:1px solid var(--bl)">${esc(r.cor||'—')}</td>
+              <td style="padding:3px 6px;border:1px solid var(--bl);text-align:center">${r.folhas||'—'}</td>
+            </tr>`).join('')}</tbody>
+          </table>
+        </div>`;
+      }).join('');
+    })()}
   </div>`;
   }catch(err){
     document.getElementById('op-detail').innerHTML=`<div style="padding:20px;color:#b83232;font-family:monospace;font-size:.75rem">Erro ao carregar OP:<br>${err.message}</div>`;
@@ -869,9 +895,9 @@ function grandTotalFromData(data){
   if(!data.cortes||!data.grades)return 0;
   let s=0;
   data.cortes.forEach((corte,ci)=>{
-    if(!Array.isArray(corte))return;
+    const rows=Array.isArray(corte)?corte:(corte&&Array.isArray(corte.rows)?corte.rows:[]);
     const gs=(data.grades[ci]||{vals:[]}).vals.reduce((a,b)=>a+b,0);
-    corte.forEach(r=>{if(!r)return;const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
+    rows.forEach(r=>{if(!r)return;const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
   });
   return s;
 }
