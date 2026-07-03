@@ -807,9 +807,11 @@ function renderDB(sort){
 function showDetail(data,el){
   document.querySelectorAll('.op-item').forEach(e=>e.classList.remove('on'));
   if(el)el.classList.add('on');
+  try{
   const pts=grandTotalFromData(data);
-  const gtLabel=GRADE_TYPES[data.gradeType||1].label;
-  const sz=GRADE_TYPES[data.gradeType||1].sizes;
+  const _gt=GRADE_TYPES[data.gradeType]||GRADE_TYPES[parseInt(data.gradeType)]||GRADE_TYPES[1];
+  const gtLabel=_gt.label;
+  const sz=_gt.sizes;
   document.getElementById('op-detail').innerHTML=`
   <div class="detail-card">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
@@ -852,6 +854,9 @@ function showDetail(data,el){
       </div>
     </div>
   </div>`;
+  }catch(err){
+    document.getElementById('op-detail').innerHTML=`<div style="padding:20px;color:#b83232;font-family:monospace;font-size:.75rem">Erro ao carregar OP:<br>${err.message}</div>`;
+  }
 }
 
 function grandTotalFromData(data){
