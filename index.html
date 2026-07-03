@@ -22,6 +22,7 @@
 }
 html{font-size:13px}
 body{background:#f0f0f0;font-family:var(--fb);color:var(--n);min-height:100vh;margin:0}
+@page{size:A4 landscape;margin:1cm}
 .app{display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:var(--n);border-bottom:3px solid var(--a);padding:0 24px;display:flex;align-items:center;gap:16px;height:54px;position:sticky;top:0;z-index:100;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.18)}
 .brand{font-family:var(--fh);font-weight:800;font-size:1rem;color:var(--wh);display:flex;align-items:center;gap:10px;letter-spacing:-.2px}
@@ -262,7 +263,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon .cpanel{display:none!important}
   body.print-mon .cpanel.on{display:block!important}
   body.print-mon button,.print-mon .btn{display:none!important}
-  body.print-mon .card{box-shadow:none!important;border:1px solid #ccc!important;border-radius:0!important;margin-bottom:10pt;page-break-inside:avoid}
+  body.print-mon .card{box-shadow:none!important;border:1px solid #ccc!important;border-radius:0!important;margin-bottom:6pt;page-break-inside:auto}
   body.print-mon .ch{background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .ct{color:#fff!important}
   body.print-mon thead th{background:#3a3a3a!important;color:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:8pt;padding:4pt 6pt}
