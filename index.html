@@ -863,8 +863,9 @@ function grandTotalFromData(data){
   if(!data.cortes||!data.grades)return 0;
   let s=0;
   data.cortes.forEach((corte,ci)=>{
+    if(!Array.isArray(corte))return;
     const gs=(data.grades[ci]||{vals:[]}).vals.reduce((a,b)=>a+b,0);
-    corte.forEach(r=>{const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
+    corte.forEach(r=>{if(!r)return;const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
   });
   return s;
 }
