@@ -266,17 +266,18 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon .card{box-shadow:none!important;border:1px solid #ccc!important;border-radius:0!important;margin-bottom:6pt;page-break-inside:auto}
   body.print-mon .ch{background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .ct{color:#fff!important}
-  body.print-mon thead th{background:#3a3a3a!important;color:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:8pt;padding:4pt 6pt}
-  body.print-mon tbody td{padding:4pt 6pt;font-size:8pt}
-  body.print-mon .ifolhas,.print-mon .itam,.print-mon .itipo,.print-mon .icor,.print-mon select{border:none!important;background:transparent!important;font-family:monospace;font-size:8pt;padding:0!important;width:auto!important}
+  body.print-mon thead th{background:#3a3a3a!important;color:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:7pt;padding:3pt 4pt;min-width:0!important;white-space:nowrap}
+  body.print-mon tbody td{padding:3pt 4pt;font-size:7pt;min-width:0!important}
+  body.print-mon .ifolhas,.print-mon .itam,.print-mon .itipo,.print-mon .icor,.print-mon select{border:none!important;background:transparent!important;font-family:monospace;font-size:7pt;padding:0!important;width:auto!important;max-width:none!important}
   body.print-mon .tw{overflow:visible!important}
-  body.print-mon table{page-break-inside:auto;width:100%}
+  body.print-mon table{page-break-inside:auto;width:100%;table-layout:auto}
   body.print-mon tr{page-break-inside:avoid}
   body.print-mon tr.empty-row{display:none!important}
   body.print-mon #toast{display:none!important}
+  body.print-mon td:last-child,body.print-mon th:last-child{display:none!important}
   body.print-mon .tsub td{background:#2e2e2e!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .rgrade td{background:#e8e8e8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  @page{margin:1cm;size:A4 landscape}
+  @page{margin:0.5cm;size:A4 landscape}
 }
 
 #toast{position:fixed;bottom:20px;right:20px;background:var(--n);color:var(--wh);padding:9px 16px;border-radius:6px;font-size:.78rem;border-left:3px solid var(--a);box-shadow:0 4px 20px rgba(0,0,0,.25);transform:translateY(16px);opacity:0;transition:all .22s;z-index:999;pointer-events:none;font-family:var(--fb)}
