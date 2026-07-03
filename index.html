@@ -773,7 +773,10 @@ function printResumo(){
 
 function printMontagem(){
   document.body.classList.add('print-mon');
-  setTimeout(()=>{window.print();document.body.classList.remove('print-mon');},120);
+  const st=document.createElement('style');
+  st.id='_mon_page';st.textContent='@page{size:A4 landscape;margin:1cm}';
+  document.head.appendChild(st);
+  setTimeout(()=>{window.print();document.body.classList.remove('print-mon');document.getElementById('_mon_page').remove();},120);
 }
 
 // ── ABA 0: HISTÓRICO ──────────────────────────────────────────
