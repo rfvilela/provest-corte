@@ -1043,6 +1043,7 @@ function buildCTable(ci){
   </tr></thead><tbody>
   <tr class="rgrade">
     <td class="ts2" colspan="2">← grade predefinida</td>
+    <td class="ts2" style="text-align:center">—</td>
     <td class="ts2" style="text-align:center">—</td>`;
   g.vals.forEach(v=>{html+=`<td class="ts2" style="font-family:var(--fm);text-align:center">${v||'—'}</td>`;});
   html+=`<td class="ts2" style="font-family:var(--fm)">${g.vals.reduce((a,b)=>a+b,0)||'—'}</td><td class="ts2">—</td><td></td></tr>`;
