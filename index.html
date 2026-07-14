@@ -590,7 +590,7 @@ const N_COR_DEFAULT=20;
 function makeGrades(gt){
   const len=GRADE_TYPES[gt].sizes.length;
   return ['CORTE 01','CORTE 02','CORTE 03','CORTE 04']
-    .map(nome=>({nome,vals:Array(len).fill(0)}));
+    .map(nome=>({nome,vals:Array(len).fill(0),retalho:false}));
 }
 function makeCortes(n){
   return Array.from({length:n},()=>({
@@ -707,16 +707,29 @@ function grandTotal(){
   for(let ci=0;ci<S.grades.length;ci++)subCorte(ci).forEach((x,j)=>s[j]+=x);
   return s;
 }
+function toggleRetalho(ci){
+  S.grades[ci].retalho=!S.grades[ci].retalho;
+  const div=document.getElementById('cpanel-'+ci);
+  if(div)div.innerHTML=buildCTable(ci);
+  refreshCorteCalcs(ci);
+  updateMeta();
+}
+
 function updateMeta(){
   const t=grandTotal().reduce((a,b)=>a+b,0);
   document.getElementById('tb-total').textContent='TOTAL: '+t+' PÇ';
   const c=document.getElementById('chip-total');if(c)c.textContent=t+' peças';
   const cgt=document.getElementById('chip-grade-type');if(cgt)cgt.textContent=GRADE_TYPES[S.gradeType].label;
-  // Auto-calcula rendimento = total metros / total peças
-  let totalKg=0;
-  (S.cortes||[]).forEach(corte=>{(corte.rows||[]).forEach(r=>{totalKg+=num(r.kgmetro);});});
-  if(t>0&&totalKg>0){
-    const rend=(totalKg/t).toFixed(4);
+  // Rendimento = média dos cortes não-retalho (metros_corte / peças_corte)
+  const rendCortes=[];
+  (S.grades||[]).forEach((g,ci)=>{
+    if(g.retalho)return;
+    const pecas=(S.cortes&&S.cortes[ci])?subCorte(ci).reduce((a,b)=>a+b,0):0;
+    let kg=0;(S.cortes&&S.cortes[ci]?S.cortes[ci].rows:[]).forEach(r=>{kg+=num(r.kgmetro);});
+    if(pecas>0&&kg>0)rendCortes.push(kg/pecas);
+  });
+  if(rendCortes.length>0){
+    const rend=(rendCortes.reduce((a,b)=>a+b,0)/rendCortes.length).toFixed(4);
     S.rendimento=rend;
     const el=document.getElementById('f-rendimento');if(el)el.value=rend;
   }
@@ -919,6 +932,8 @@ function loadOP(id){
   if(!data){toast('OP não encontrada.');return;}
   S=JSON.parse(JSON.stringify(data));
   if(!S.gradeType)S.gradeType=1;
+  // Garante campo retalho em grades antigas
+  if(S.grades)S.grades.forEach(g=>{if(g.retalho===undefined)g.retalho=false;});
   // Migrate old format: cortes was array-of-arrays, now array-of-{rows:[]}
   if(S.cortes&&Array.isArray(S.cortes)){
     S.cortes=S.cortes.map(c=>{
@@ -1037,10 +1052,14 @@ function showCTab(ci){
 function buildCTable(ci){
   const g=S.grades[ci];const sz=sizes();
   const ths=sz.map(s=>`<th>${s}</th>`).join('');
+  const isRet=!!g.retalho;
   let html=`<div class="card">
   <div class="ch">
     <div class="ct">${esc(g.nome)} <span class="cbadge">${sz.map((s,j)=>s+':'+g.vals[j]).join(' ')}</span></div>
-    <span class="chip cha" id="sch-${ci}">0 pç</span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button onclick="toggleRetalho(${ci})" style="font-family:var(--fm);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:3px;border:1.5px solid ${isRet?'#f0a500':'rgba(255,255,255,.3)'};background:${isRet?'#f0a500':'transparent'};color:${isRet?'#1a1a1a':'rgba(255,255,255,.7)'};cursor:pointer;letter-spacing:.3px;transition:all .15s">${isRet?'✓ RETALHO':'RETALHO'}</button>
+      <span class="chip cha" id="sch-${ci}">0 pç</span>
+    </div>
   </div>
   <div class="tw"><table>
   <thead><tr>
@@ -1205,11 +1224,12 @@ function renderResCortes(unLabel){
     const rend = totalPecas>0 && totalKg>0 ? (totalKg/totalPecas).toFixed(4) : '—';
 
     const tr=document.createElement('tr');
-    let h=`<td class="tl">${esc(g.nome)}</td>`;
+    const isRet=!!g.retalho;
+    let h=`<td class="tl">${esc(g.nome)}${isRet?' <span style="font-family:var(--fm);font-size:.6rem;background:#f0a500;color:#1a1a1a;padding:1px 5px;border-radius:2px;font-weight:700;vertical-align:middle">RETALHO</span>':''}</td>`;
     s.forEach(v=>{h+=`<td class="tcalc">${v||'—'}</td>`;});
     h+=`<td class="ttotal">${totalPecas||'—'}</td>`;
-    h+=`<td class="ttotal" style="color:var(--gr);font-family:var(--fm)">${totalKg>0?totalKg.toFixed(3):'—'}</td>`;
-    h+=`<td class="ttotal" style="color:var(--ad);font-family:var(--fm);font-weight:700">${rend}</td>`;
+    h+=`<td class="ttotal" style="color:var(--gr);font-family:var(--fm)">${isRet?'<span style="font-size:.65rem;color:var(--ts)">retalho</span>':totalKg>0?totalKg.toFixed(3):'—'}</td>`;
+    h+=`<td class="ttotal" style="color:var(--ad);font-family:var(--fm);font-weight:700">${isRet?'<span style="font-size:.65rem;color:var(--ts)">—</span>':rend}</td>`;
     tr.innerHTML=h;tb.appendChild(tr);
   });
 
