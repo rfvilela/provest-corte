@@ -720,12 +720,11 @@ function updateMeta(){
   document.getElementById('tb-total').textContent='TOTAL: '+t+' PÇ';
   const c=document.getElementById('chip-total');if(c)c.textContent=t+' peças';
   const cgt=document.getElementById('chip-grade-type');if(cgt)cgt.textContent=GRADE_TYPES[S.gradeType].label;
-  // Rendimento = total metros / total peças dos cortes não-retalho
+  // Rendimento = total metros (cortes não-retalho) / total peças (todos os cortes)
   let totalKgRend=0,totalPecasRend=0;
   (S.grades||[]).forEach((g,ci)=>{
-    if(g.retalho)return;
     totalPecasRend+=(S.cortes&&S.cortes[ci])?subCorte(ci).reduce((a,b)=>a+b,0):0;
-    (S.cortes&&S.cortes[ci]?S.cortes[ci].rows:[]).forEach(r=>{totalKgRend+=num(r.kgmetro);});
+    if(!g.retalho)(S.cortes&&S.cortes[ci]?S.cortes[ci].rows:[]).forEach(r=>{totalKgRend+=num(r.kgmetro);});
   });
   if(totalPecasRend>0&&totalKgRend>0){
     const rend=(totalKgRend/totalPecasRend).toFixed(4);
@@ -1213,11 +1212,11 @@ function renderResCortes(unLabel){
     s.forEach((v,j)=>grand[j]+=v);
     grandPecas+=totalPecas;
 
-    // Sum all kgmetro values for this corte
+    // Sum all kgmetro values for this corte (retalho não entra no grandKg)
     let totalKg=0;
     const nRows=S.cortes[ci].rows.length;
     for(let fi=0;fi<nRows;fi++) totalKg+=num(S.cortes[ci].rows[fi].kgmetro);
-    grandKg+=totalKg;
+    if(!g.retalho)grandKg+=totalKg;
 
     // Rendimento = totalKg / totalPecas (per corte)
     const rend = totalPecas>0 && totalKg>0 ? (totalKg/totalPecas).toFixed(4) : '—';
