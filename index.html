@@ -720,16 +720,15 @@ function updateMeta(){
   document.getElementById('tb-total').textContent='TOTAL: '+t+' PÇ';
   const c=document.getElementById('chip-total');if(c)c.textContent=t+' peças';
   const cgt=document.getElementById('chip-grade-type');if(cgt)cgt.textContent=GRADE_TYPES[S.gradeType].label;
-  // Rendimento = média dos cortes não-retalho (metros_corte / peças_corte)
-  const rendCortes=[];
+  // Rendimento = total metros / total peças dos cortes não-retalho
+  let totalKgRend=0,totalPecasRend=0;
   (S.grades||[]).forEach((g,ci)=>{
     if(g.retalho)return;
-    const pecas=(S.cortes&&S.cortes[ci])?subCorte(ci).reduce((a,b)=>a+b,0):0;
-    let kg=0;(S.cortes&&S.cortes[ci]?S.cortes[ci].rows:[]).forEach(r=>{kg+=num(r.kgmetro);});
-    if(pecas>0&&kg>0)rendCortes.push(kg/pecas);
+    totalPecasRend+=(S.cortes&&S.cortes[ci])?subCorte(ci).reduce((a,b)=>a+b,0):0;
+    (S.cortes&&S.cortes[ci]?S.cortes[ci].rows:[]).forEach(r=>{totalKgRend+=num(r.kgmetro);});
   });
-  if(rendCortes.length>0){
-    const rend=(rendCortes.reduce((a,b)=>a+b,0)/rendCortes.length).toFixed(4);
+  if(totalPecasRend>0&&totalKgRend>0){
+    const rend=(totalKgRend/totalPecasRend).toFixed(4);
     S.rendimento=rend;
     const el=document.getElementById('f-rendimento');if(el)el.value=rend;
   }
