@@ -251,6 +251,8 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 
 @media print{
   body.print-mon .topbar{display:flex!important;background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;position:static!important}
+  body.print-mon .topbar-info{color:#ffffff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .topbar-badge{color:#ffffff!important;background:rgba(255,255,255,.2)!important;border-color:rgba(255,255,255,.4)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .app{min-height:0!important;height:auto!important}
   body.print-mon .main{padding:0!important}
   body.print-mon .nav{display:none!important}
@@ -268,7 +270,8 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon .ct{color:#fff!important}
   body.print-mon thead th{background:#3a3a3a!important;color:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:7pt;padding:3pt 4pt;min-width:0!important;white-space:nowrap}
   body.print-mon tbody td{padding:3pt 4pt;font-size:7pt;min-width:0!important}
-  body.print-mon .ifolhas,.print-mon .itam,.print-mon .itipo,.print-mon .icor,.print-mon select{border:none!important;background:transparent!important;font-family:monospace;font-size:7pt;padding:0!important;width:auto!important;max-width:none!important}
+  body.print-mon .ifolhas,.print-mon .itam,.print-mon .itipo,.print-mon .icor,.print-mon select{border:none!important;background:transparent!important;font-family:monospace;font-size:7pt;padding:0!important;width:auto!important;max-width:none!important;-webkit-appearance:none!important;appearance:none!important;color:#1a1a1a!important}
+  body.print-mon .tfolhas td{color:#1a1a1a!important;font-size:7pt!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .tw{overflow:visible!important}
   body.print-mon table{page-break-inside:auto;width:100%;table-layout:auto}
   body.print-mon tr{page-break-inside:avoid}
@@ -1084,7 +1087,7 @@ function buildCTable(ci){
     <td style="background:var(--nl)"></td></tr>`;
 
   // Folhas total row (extra summary row above subtotal)
-  html+=`<tr style="background:rgba(0,0,0,.04)">
+  html+=`<tr class="tfolhas" style="background:rgba(0,0,0,.04)">
     <td colspan="4" style="text-align:right;padding:5px 10px;font-family:var(--fm);font-size:.7rem;color:var(--ts)">Total Folhas →</td>`;
   sizes().forEach((_,j)=>{html+=`<td style="font-family:var(--fm);font-size:.72rem;color:var(--ts)" id="sf-${ci}-${j}">—</td>`;});
   html+=`<td class="ttotal" id="sf-${ci}-t" style="font-size:.8rem">—</td>
