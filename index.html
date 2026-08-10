@@ -249,6 +249,12 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   .tw{overflow:visible!important}
   table{page-break-inside:auto}
   tr{page-break-inside:avoid}
+  /* comprime tabelas do Resumo para caber em A4 landscape */
+  #panel-res thead th{font-size:7pt!important;padding:3pt 4pt!important;white-space:nowrap}
+  #panel-res tbody td{font-size:7pt!important;padding:3pt 4pt!important}
+  #panel-res .tl{max-width:80pt!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #panel-res .ts2{max-width:60pt!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #panel-res .rhead td{font-size:7pt!important;padding:3pt 6pt!important}
   @page{margin:1.5cm;size:A4 landscape}
 }
 
