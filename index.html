@@ -1629,6 +1629,50 @@ function renderResCorcorte(){
   tr.innerHTML=h;tb.appendChild(tr);
 }
 
+// ── SYNC EM TEMPO REAL (polling) ──────────────────────────────
+let _realtimeInterval=null;
+
+async function realtimeCheck(){
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/ops?select=id,saved_at',{headers:sbAuthHeaders()});
+    if(!r.ok)return;
+    const rows=await r.json();
+    let changed=false;
+    for(const row of rows){
+      const local=lsGet(row.id);
+      const remoteSavedAt=row.saved_at||0;
+      if(!local||(local.savedAt||0)<remoteSavedAt){
+        // busca OP completa
+        const r2=await fetch(SB_URL+'/rest/v1/ops?id=eq.'+encodeURIComponent(row.id)+'&select=data',{headers:sbAuthHeaders()});
+        if(!r2.ok)continue;
+        const rows2=await r2.json();
+        const op=rows2[0]&&rows2[0].data;
+        if(!op||!op.id)continue;
+        lsSaveLocal(op);
+        changed=true;
+        // se esta OP está aberta agora, recarrega ela
+        if(S.id===op.id){
+          Object.assign(S,op);
+          const fdata=document.getElementById('f-data');if(fdata)fdata.value=S.data||'';
+          const fcli=document.getElementById('f-cliente');if(fcli)fcli.value=S.cliente||'';
+          const fop=document.getElementById('f-op');if(fop)fop.value=S.op||'';
+          const fref=document.getElementById('f-ref');if(fref)fref.value=S.ref||'';
+          const frend=document.getElementById('f-rendimento');if(frend)frend.value=S.rendimento||'';
+          syncHeader();setGradeType(S.gradeType||1,false);setUnidade(S.unidade||'Metros');
+          renderTec();renderGrades();buildMon();refreshCalcs();renderRes();
+          toast('OP atualizada por outro usuário.');
+        }
+      }
+    }
+    if(changed)renderDB();
+  }catch(e){/* silencioso */}
+}
+
+function startRealtime(){
+  if(_realtimeInterval)clearInterval(_realtimeInterval);
+  _realtimeInterval=setInterval(realtimeCheck,30000);
+}
+
 // ── INIT ──────────────────────────────────────────────────────
 function init(){
   S.id=uid();
@@ -1641,6 +1685,7 @@ function init(){
   renderCatTipos();
   syncWithSupabase();
   syncCatalogWithSupabase();
+  startRealtime();
 }
 
 // ── AUTENTICAÇÃO ─────────────────────────────────────────────────
