@@ -225,27 +225,27 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 
 /* ── PRINT STYLES ─────────────────────────── */
 @media print{
-  body{background:#fff!important;font-size:11pt;color:#000}
+  body{background:#fff!important;font-size:11pt;color:#2c1f14}
   .app,.main{background:#fff!important}
   .topbar,.nav,.sh .ml,#panel-db,#panel-cad,#panel-mon,.ctabs,.cpanel,
   button,.btn,.ntab,.chip,.chip-grade{display:none!important}
   .panel{display:none!important}
   #panel-res{display:block!important;padding:0}
   .sh{margin-bottom:12pt}
-  .st{font-size:16pt;color:#000}
-  .ss{font-size:9pt;color:#555}
-  .card{box-shadow:none!important;border:1px solid #ccc!important;border-radius:0!important;margin-bottom:14pt;page-break-inside:avoid}
-  .ch{background:#2e2e2e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .ct{color:#fff!important}
-  thead th{background:#3a3a3a!important;color:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:8pt;padding:5pt 7pt}
-  tbody td{padding:5pt 7pt;font-size:9pt}
-  .tcalc,.ttotal{font-family:monospace}
-  .rhead td{background:#1a1a1a!important;color:#d0d0d0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .rgrand td{background:#2e2e2e!important;color:#ffffff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-weight:700!important}
-  .rcor td{background:#e8e8e8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .res-hfield-label{color:#2a2a2a!important;font-weight:600!important}
-  .res-hfield-val{color:#1a1a1a!important}
-  .res-hfield-val.mono{color:#2a2a2a!important}
+  .st{font-size:16pt;color:#2c1f14}
+  .ss{font-size:9pt;color:#6b5040}
+  .card{box-shadow:none!important;border:1px solid #c8b49a!important;border-radius:0!important;margin-bottom:14pt;page-break-inside:avoid}
+  .ch{background:#3a2e22!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ct{color:#f2e8d8!important}
+  thead th{background:#4e4035!important;color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:8pt;padding:5pt 7pt}
+  tbody td{padding:5pt 7pt;font-size:9pt;color:#2c1f14}
+  .tcalc,.ttotal{font-family:monospace;color:#2c1f14}
+  .rhead td{background:#3a2e22!important;color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rgrand td{background:#4e4035!important;color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-weight:700!important}
+  .rcor td{background:#eeddc8!important;color:#2c1f14!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .res-hfield-label{color:#5c4838!important;font-weight:700!important}
+  .res-hfield-val{color:#2c1f14!important;font-weight:600!important}
+  .res-hfield-val.mono{color:#3a2e22!important}
   .tw{overflow:visible!important}
   table{page-break-inside:auto}
   tr{page-break-inside:avoid}
@@ -253,9 +253,9 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 }
 
 @media print{
-  body.print-mon .topbar{display:flex!important;background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;position:static!important}
-  body.print-mon .topbar-info{color:#ffffff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  body.print-mon .topbar-badge{color:#ffffff!important;background:rgba(255,255,255,.2)!important;border-color:rgba(255,255,255,.4)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .topbar{display:flex!important;background:#3a2e22!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;position:static!important}
+  body.print-mon .topbar-info{color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .topbar-badge{color:#f2e8d8!important;background:rgba(242,232,216,.15)!important;border-color:rgba(242,232,216,.4)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .app{min-height:0!important;height:auto!important}
   body.print-mon .main{padding:0!important}
   body.print-mon .nav{display:none!important}
@@ -268,21 +268,21 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon .cpanel{display:none!important}
   body.print-mon .cpanel.on{display:block!important}
   body.print-mon button,.print-mon .btn{display:none!important}
-  body.print-mon .card{box-shadow:none!important;border:1px solid #ccc!important;border-radius:0!important;margin-bottom:6pt;page-break-inside:auto}
-  body.print-mon .ch{background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  body.print-mon .ct{color:#fff!important}
-  body.print-mon thead th{background:#3a3a3a!important;color:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:7pt;padding:3pt 4pt;min-width:0!important;white-space:nowrap}
-  body.print-mon tbody td{padding:3pt 4pt;font-size:7pt;min-width:0!important}
-  body.print-mon .ifolhas,.print-mon .itam,.print-mon .itipo,.print-mon .icor,.print-mon select{border:none!important;background:transparent!important;font-family:monospace;font-size:7pt;padding:0!important;width:auto!important;max-width:none!important;-webkit-appearance:none!important;appearance:none!important;color:#1a1a1a!important}
-  body.print-mon .tfolhas td{color:#1a1a1a!important;font-size:7pt!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .card{box-shadow:none!important;border:1px solid #c8b49a!important;border-radius:0!important;margin-bottom:6pt;page-break-inside:auto}
+  body.print-mon .ch{background:#3a2e22!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .ct{color:#f2e8d8!important}
+  body.print-mon thead th{background:#4e4035!important;color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:7pt;padding:3pt 4pt;min-width:0!important;white-space:nowrap}
+  body.print-mon tbody td{padding:3pt 4pt;font-size:7pt;min-width:0!important;color:#2c1f14}
+  body.print-mon .ifolhas,.print-mon .itam,.print-mon .itipo,.print-mon .icor,.print-mon select{border:none!important;background:transparent!important;font-family:monospace;font-size:7pt;padding:0!important;width:auto!important;max-width:none!important;-webkit-appearance:none!important;appearance:none!important;color:#2c1f14!important}
+  body.print-mon .tfolhas td{color:#2c1f14!important;font-size:7pt!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .tw{overflow:visible!important}
   body.print-mon table{page-break-inside:auto;width:100%;table-layout:auto}
   body.print-mon tr{page-break-inside:avoid}
   body.print-mon tr.empty-row{display:none!important}
   body.print-mon #toast{display:none!important}
   body.print-mon td:last-child,body.print-mon th:last-child{display:none!important}
-  body.print-mon .tsub td{background:#2e2e2e!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  body.print-mon .rgrade td{background:#e8e8e8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .tsub td{background:#4e4035!important;color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .rgrade td{background:#eeddc8!important;color:#2c1f14!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   @page{margin:0.5cm;size:A4 landscape}
 }
 
