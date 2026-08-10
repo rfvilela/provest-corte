@@ -280,7 +280,9 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon tr{page-break-inside:avoid}
   body.print-mon tr.empty-row{display:none!important}
   body.print-mon #toast{display:none!important}
-  body.print-mon td:last-child,body.print-mon th:last-child{display:none!important}
+  body.print-mon .del-col{display:none!important}
+  .ts2{color:#4a3020!important}
+  .tl,.tgr{color:#2c1f14!important}
   body.print-mon .tsub td{background:#4e4035!important;color:#f2e8d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body.print-mon .rgrade td{background:#eeddc8!important;color:#2c1f14!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   @page{margin:0.5cm;size:A4 landscape}
@@ -624,11 +626,14 @@ S.cortes.forEach(c=>{if(S.tecidos[0]){c.rows[0].tipo=S.tecidos[0].tipo;c.rows[0]
 
 // ── LOCALSTORAGE ───────────────────────────────────────────────
 const LS_PREFIX='provest_op_';
+const LS_DELETED='provest_deleted_ids';
+function getDeletedIds(){try{return new Set(JSON.parse(localStorage.getItem(LS_DELETED)||'[]'));}catch(e){return new Set();}}
+function markDeleted(id){const s=getDeletedIds();s.add(id);localStorage.setItem(LS_DELETED,JSON.stringify([...s]));}
 function lsKeys(){return Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX));}
 function lsSaveLocal(data){try{localStorage.setItem(LS_PREFIX+data.id,JSON.stringify(data));return true;}catch(e){return false;}}
 function lsSave(data){const ok=lsSaveLocal(data);if(ok)sbUpsert(data);return ok;}
 function lsGet(id){try{const v=localStorage.getItem(LS_PREFIX+id);return v?JSON.parse(v):null;}catch(e){return null;}}
-function lsDel(id){try{localStorage.removeItem(LS_PREFIX+id);sbDelete(id);return true;}catch(e){return false;}}
+function lsDel(id){try{markDeleted(id);localStorage.removeItem(LS_PREFIX+id);sbDelete(id);return true;}catch(e){return false;}}
 function lsAll(){return lsKeys().map(k=>lsGet(k.replace(LS_PREFIX,''))).filter(Boolean);}
 
 // ── SUPABASE SYNC ────────────────────────────────────────────────
@@ -666,8 +671,11 @@ async function syncWithSupabase(){
       const existing=lsGet(op.id);
       if(!existing||(op.savedAt||0)>(existing.savedAt||0)){lsSaveLocal(op);imported++;}
     });
-    // envia para o banco as OPs locais que ainda não estão na nuvem
-    lsAll().forEach(op=>{if(!remoteIds.has(op.id))sbUpsert(op);});
+    const deletedIds=getDeletedIds();
+    // OPs locais não encontradas no servidor: se nunca foram deletadas intencionalmente, sobe para nuvem
+    lsAll().forEach(op=>{if(!remoteIds.has(op.id)&&!deletedIds.has(op.id))sbUpsert(op);});
+    // OPs locais que foram deletadas do servidor por outro usuário: apaga localmente também
+    lsAll().forEach(op=>{if(!remoteIds.has(op.id)&&deletedIds.has(op.id)){localStorage.removeItem(LS_PREFIX+op.id);}});
     if(imported>0){renderDB();toast('Histórico sincronizado: '+imported+' OP(s) atualizada(s).');}
   }catch(e){console.error('Erro ao sincronizar:',e);}
 }
@@ -1070,14 +1078,14 @@ function buildCTable(ci){
     <th style="min-width:44px">Marcação</th>
     <th style="min-width:140px;text-align:left">Tipo de Tecido</th>
     <th style="min-width:160px;text-align:left">Cor / Discriminação</th>
-    <th style="min-width:65px">Folhas</th>${ths}<th>Total</th><th class="kgmetro-header" style="min-width:72px">${S.unidade||'Metros'}</th><th style="width:36px"></th>
+    <th style="min-width:65px">Folhas</th>${ths}<th>Total</th><th class="kgmetro-header" style="min-width:72px">${S.unidade||'Metros'}</th><th class="del-col" style="width:36px"></th>
   </tr></thead><tbody>
   <tr class="rgrade">
     <td class="ts2" colspan="2">← grade predefinida</td>
     <td class="ts2" style="text-align:center">—</td>
     <td class="ts2" style="text-align:center">—</td>`;
   g.vals.forEach(v=>{html+=`<td class="ts2" style="font-family:var(--fm);text-align:center">${v||'—'}</td>`;});
-  html+=`<td class="ts2" style="font-family:var(--fm)">${g.vals.reduce((a,b)=>a+b,0)||'—'}</td><td class="ts2">—</td><td></td></tr>`;
+  html+=`<td class="ts2" style="font-family:var(--fm)">${g.vals.reduce((a,b)=>a+b,0)||'—'}</td><td class="ts2">—</td><td class="del-col"></td></tr>`;
   const nRows=S.cortes[ci].rows.length;
   for(let fi=0;fi<nRows;fi++)html+=buildCorRow(ci,fi);
   html+=`<tr><td colspan="${sizes().length+5}" style="padding:8px 10px;background:var(--il);border-top:2px dashed var(--bd)">
@@ -1087,7 +1095,7 @@ function buildCTable(ci){
   sz.forEach((_,j)=>{html+=`<td class="ts3" id="sb-${ci}-${j}">—</td>`;});
   html+=`<td class="ts3" id="sb-${ci}-t">—</td>
     <td class="ts3" id="sb-${ci}-kg" style="background:var(--nl)!important">—</td>
-    <td style="background:var(--nl)"></td></tr>`;
+    <td class="del-col" style="background:var(--nl)"></td></tr>`;
 
   // Folhas total row (extra summary row above subtotal)
   html+=`<tr class="tfolhas" style="background:rgba(58,46,34,.04)">
@@ -1095,7 +1103,7 @@ function buildCTable(ci){
   sizes().forEach((_,j)=>{html+=`<td style="font-family:var(--fm);font-size:.72rem;color:var(--ts)" id="sf-${ci}-${j}">—</td>`;});
   html+=`<td class="ttotal" id="sf-${ci}-t" style="font-size:.8rem">—</td>
     <td id="sf-${ci}-kg" class="kgmetro-header-cell" style="font-family:var(--fm);font-size:.78rem;font-weight:700;color:var(--gr);text-align:center">—</td>
-    <td></td></tr>
+    <td class="del-col"></td></tr>
   </tbody></table></div></div>`;
   return html;
 }
@@ -1125,7 +1133,7 @@ function buildCorRow(ci,fi){
         value="${r.kgmetro||''}" placeholder="0.000"
         oninput="S.cortes[${ci}].rows[${fi}].kgmetro=this.value;updKgTotal(${ci})">
     </td>
-    <td style="width:36px;padding:4px 6px;background:rgba(192,57,43,.04);border-left:1px solid var(--bl)">
+    <td class="del-col" style="width:36px;padding:4px 6px;background:rgba(192,57,43,.04);border-left:1px solid var(--bl)">
       <button class="btn bd2 bsm" title="Remover linha" onclick="removeCorRow(${ci},${fi})" style="padding:3px 7px;font-size:.75rem">✕</button>
     </td></tr>`;
   return h;
@@ -1638,6 +1646,16 @@ async function realtimeCheck(){
     if(!r.ok)return;
     const rows=await r.json();
     let changed=false;
+    const remoteIdSet=new Set(rows.map(r=>r.id));
+    // detecta OPs apagadas remotamente e remove do localStorage local
+    lsAll().forEach(op=>{
+      if(!remoteIdSet.has(op.id)){
+        markDeleted(op.id);
+        localStorage.removeItem(LS_PREFIX+op.id);
+        changed=true;
+        if(S.id===op.id)toast('Esta OP foi apagada por outro usuário.');
+      }
+    });
     for(const row of rows){
       const local=lsGet(row.id);
       const remoteSavedAt=row.saved_at||0;
