@@ -1,0 +1,10 @@
+name = "provest-dapic"
+main = "dapic-worker.js"
+compatibility_date = "2024-09-01"
+account_id = "840b238b0d016c99f9af24fd1d50f3cb"
+preview_urls = false
+
+[vars]
+ALLOWED_ORIGIN = "https://rfvilela.github.io"
+APP_KEY = "provest2025"
+DAPIC_EMPRESA = "Provest"

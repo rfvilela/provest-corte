@@ -1410,6 +1410,7 @@ function lsGetStore(k,def){try{const v=localStorage.getItem(k);return v?JSON.par
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 
 let _dapicCfg=lsGetStore(DAPIC_CFG_KEY,{url:'',key:'',grupos:null,inativas:false});
+if(!/provest-dapic\.rfavilela\.workers\.dev/.test(_dapicCfg.url||''))_dapicCfg.url='https://provest-dapic.rfavilela.workers.dev';
 let _dapicGrupos=[];   // [{Id,Descricao,Status}]
 let _dapicBusy=false;
 
