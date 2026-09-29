@@ -909,7 +909,8 @@ function grandTotalFromData(data){
   let s=0;
   data.cortes.forEach((corte,ci)=>{
     const gs=(data.grades[ci]||{vals:[]}).vals.reduce((a,b)=>a+b,0);
-    corte.forEach(r=>{const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
+    const rows=Array.isArray(corte)?corte:((corte&&corte.rows)||[]);
+    rows.forEach(r=>{const f=num(r.folhas);if(f&&r.tipo&&r.cor)s+=gs*f;});
   });
   return s;
 }
@@ -919,6 +920,8 @@ function loadOP(id){
   if(!data){toast('OP não encontrada.');return;}
   S=JSON.parse(JSON.stringify(data));
   if(!S.gradeType)S.gradeType=1;
+  if(!Array.isArray(S.tecidos))S.tecidos=[];
+  if(!Array.isArray(S.grades))S.grades=[];
   // Migrate old format: cortes was array-of-arrays, now array-of-{rows:[]}
   if(S.cortes&&Array.isArray(S.cortes)){
     S.cortes=S.cortes.map(c=>{
