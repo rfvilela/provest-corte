@@ -476,7 +476,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
         </div>
       </div>
       <!-- Row 4: Marca tecido + Largura tecido + Largura forro + Unidade -->
-      <div class="frow3" style="grid-template-columns:1fr 1fr 1fr 1.4fr auto;gap:12px;margin-bottom:12px;align-items:end">
+      <div class="frow3" style="grid-template-columns:1fr 1fr 1fr auto;gap:12px;margin-bottom:12px;align-items:end">
         <div class="fgroup">
           <span class="flabel">Marca do Tecido</span>
           <input type="text" class="ifield" id="f-marca-tecido" placeholder="Ex: Santanense">
@@ -489,11 +489,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
           <span class="flabel">Largura Forro (m)</span>
           <input type="number" step="0.01" min="0" class="ifield" id="f-largura-forro" placeholder="Ex: 1.40" style="text-align:left">
         </div>
-        <div class="fgroup">
-          <span class="flabel">Zíper <span style="opacity:.6">(opcional)</span></span>
-          <input type="text" class="ifield" id="f-ziper" list="ziper-list" placeholder="Sem zíper" autocomplete="off">
-          <datalist id="ziper-list"></datalist>
-        </div>
+
         <div class="fgroup">
           <span class="flabel">Unidade</span>
           <div class="unidade-toggle" id="unidade-toggle">
@@ -891,7 +887,6 @@ function showDetail(data,el){
       <div><div class="detail-label">Marca do Tecido</div><div class="detail-val">${esc(data.marcaTecido||'—')}</div></div>
       <div><div class="detail-label">Largura Tecido</div><div class="detail-val" style="font-family:var(--fm)">${data.larguraTecido?data.larguraTecido+' m':'—'}</div></div>
       <div><div class="detail-label">Largura Forro</div><div class="detail-val" style="font-family:var(--fm)">${data.larguraForro?data.larguraForro+' m':'—'}</div></div>
-      <div><div class="detail-label">Zíper</div><div class="detail-val">${esc(data.ziper||'Sem zíper')}</div></div>
     </div>
     <div style="margin-bottom:10px">
       <div class="detail-label" style="margin-bottom:4px">Tamanhos</div>
@@ -932,13 +927,13 @@ function loadOP(id){
   if(S.cortes&&Array.isArray(S.cortes)){
     S.cortes=S.cortes.map(c=>{
       if(Array.isArray(c))return{rows:c.map(r=>({marcacao:r.marcacao||'',tipo:r.tipo||'',cor:r.cor||'',folhas:r.folhas||'',kgmetro:r.kgmetro||''}))};
-      if(c&&Array.isArray(c.rows))return{rows:c.rows.map(r=>({marcacao:r.marcacao||'',tipo:r.tipo||'',cor:r.cor||'',folhas:r.folhas||'',kgmetro:r.kgmetro||''}))};
+      if(c&&Array.isArray(c.rows))return{rows:c.rows.map(r=>({marcacao:r.marcacao||'',tipo:r.tipo||'',cor:r.cor||'',ziper:r.ziper||'',folhas:r.folhas||'',kgmetro:r.kgmetro||''}))};
       return{rows:[{marcacao:'',tipo:'',cor:'',folhas:'',kgmetro:''}]};
     });
   }
   const fieldMap={cliente:'f-cliente',op:'f-op',ref:'f-ref',data:'f-data',desc:'f-desc',obs:'f-obs',
     entrega:'f-entrega',rendimento:'f-rendimento',cortador:'f-cortador',enfestador:'f-enfestador',
-    marcaTecido:'f-marca-tecido',larguraTecido:'f-largura-tecido',larguraForro:'f-largura-forro',ziper:'f-ziper'};
+    marcaTecido:'f-marca-tecido',larguraTecido:'f-largura-tecido',larguraForro:'f-largura-forro'};
   Object.entries(fieldMap).forEach(([k,id])=>{
     const el=document.getElementById(id);if(el)el.value=S[k]||'';
   });
@@ -958,10 +953,10 @@ function confirmDelete(id){
 function newOP(){
   S={
     id:uid(),cliente:'',op:'',ref:'',data:new Date().toISOString().slice(0,10),
-    desc:'',obs:'',entrega:'',rendimento:'',cortador:'',enfestador:'',marcaTecido:'',larguraTecido:'',larguraForro:'',ziper:'',unidade:'Metros',gradeType:1,
+    desc:'',obs:'',entrega:'',rendimento:'',cortador:'',enfestador:'',marcaTecido:'',larguraTecido:'',larguraForro:'',unidade:'Metros',gradeType:1,
     tecidos:[],grades:makeGrades(1),cortes:makeCortes(4),
   };
-  ['f-cliente','f-op','f-ref','f-desc','f-obs','f-entrega','f-rendimento','f-cortador','f-enfestador','f-marca-tecido','f-largura-tecido','f-largura-forro','f-ziper'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';}); S.unidade='Metros';
+  ['f-cliente','f-op','f-ref','f-desc','f-obs','f-entrega','f-rendimento','f-cortador','f-enfestador','f-marca-tecido','f-largura-tecido','f-largura-forro'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';}); S.unidade='Metros';
   document.getElementById('f-data').value=S.data;
   syncHeader();setGradeType(1,false);setUnidade('Metros');renderTec();renderGrades();buildMon();refreshCalcs();
   goTab('cad');toast('Nova OP criada. Preencha os dados e salve.');
@@ -979,7 +974,6 @@ function saveCurrentOP(){
   S.marcaTecido=document.getElementById('f-marca-tecido').value;
   S.larguraTecido=document.getElementById('f-largura-tecido').value;
   S.larguraForro=document.getElementById('f-largura-forro').value;
-  S.ziper=document.getElementById('f-ziper').value.trim();
   // unidade saved via setUnidade already in S.unidade
   if(lsSave(S)){renderDB();toast('OP salva: '+(S.cliente||'sem cliente')+' / OP '+(S.op||'—'));}
   else toast('Erro ao salvar.');
@@ -1057,19 +1051,20 @@ function buildCTable(ci){
     <th style="min-width:44px">Marcação</th>
     <th style="min-width:140px;text-align:left">Tipo de Tecido</th>
     <th style="min-width:160px;text-align:left">Cor / Discriminação</th>
+    <th style="min-width:150px;text-align:left">Zíper</th>
     <th style="min-width:65px">Folhas</th>${ths}<th>Total</th><th class="kgmetro-header" style="min-width:72px">${S.unidade||'Metros'}</th><th style="width:36px"></th>
   </tr></thead><tbody>
   <tr class="rgrade">
-    <td class="ts2" colspan="2">← grade predefinida</td>
+    <td class="ts2" colspan="3">← grade predefinida</td>
     <td class="ts2" style="text-align:center">—</td>`;
   g.vals.forEach(v=>{html+=`<td class="ts2" style="font-family:var(--fm);text-align:center">${v||'—'}</td>`;});
   html+=`<td class="ts2" style="font-family:var(--fm)">${g.vals.reduce((a,b)=>a+b,0)||'—'}</td><td class="ts2">—</td><td></td></tr>`;
   const nRows=S.cortes[ci].rows.length;
   for(let fi=0;fi<nRows;fi++)html+=buildCorRow(ci,fi);
-  html+=`<tr><td colspan="${sizes().length+5}" style="padding:8px 10px;background:var(--il);border-top:2px dashed var(--bd)">
+  html+=`<tr><td colspan="${sizes().length+8}" style="padding:8px 10px;background:var(--il);border-top:2px dashed var(--bd)">
     <button class="btn bg bsm" onclick="addCorRow(${ci})" style="width:100%;justify-content:center">+ Adicionar linha</button>
   </td></tr>`;
-  html+=`<tr class="tsub"><td class="ts3" colspan="4" style="text-align:left;padding-left:10px">Subtotal ${esc(g.nome)}</td>`;
+  html+=`<tr class="tsub"><td class="ts3" colspan="5" style="text-align:left;padding-left:10px">Subtotal ${esc(g.nome)}</td>`;
   sz.forEach((_,j)=>{html+=`<td class="ts3" id="sb-${ci}-${j}">—</td>`;});
   html+=`<td class="ts3" id="sb-${ci}-t">—</td>
     <td class="ts3" id="sb-${ci}-kg" style="background:var(--nl)!important">—</td>
@@ -1077,7 +1072,7 @@ function buildCTable(ci){
 
   // Folhas total row (extra summary row above subtotal)
   html+=`<tr style="background:rgba(15,28,46,.04)">
-    <td colspan="4" style="text-align:right;padding:5px 10px;font-family:var(--fm);font-size:.7rem;color:var(--ts)">Total Folhas →</td>`;
+    <td colspan="5" style="text-align:right;padding:5px 10px;font-family:var(--fm);font-size:.7rem;color:var(--ts)">Total Folhas →</td>`;
   sizes().forEach((_,j)=>{html+=`<td style="font-family:var(--fm);font-size:.72rem;color:var(--ts)" id="sf-${ci}-${j}">—</td>`;});
   html+=`<td class="ttotal" id="sf-${ci}-t" style="font-size:.8rem">—</td>
     <td id="sf-${ci}-kg" class="kgmetro-header-cell" style="font-family:var(--fm);font-size:.78rem;font-weight:700;color:var(--gr);text-align:center">—</td>
@@ -1091,6 +1086,8 @@ function buildCorRow(ci,fi){
   const tiposOpts=tipos().map(t=>`<option value="${esc(t)}"${r.tipo===t?' selected':''}>${esc(t)}</option>`).join('');
   const corsOpts=(r.tipo?coresDe(r.tipo):S.tecidos.map(t=>t.cor))
     .map(c=>`<option value="${esc(c)}"${r.cor===c?' selected':''}>${esc(c)}</option>`).join('');
+  const zl=_ziperes.slice();if(r.ziper&&!zl.includes(r.ziper))zl.unshift(r.ziper);
+  const zipOpts=zl.map(z=>`<option value="${esc(z)}"${r.ziper===z?' selected':''}>${esc(z)}</option>`).join('');
   const vals=calcRow(ci,fi);const rt=vals.reduce((a,b)=>a+b,0);
   const marcOpts=Array.from({length:20},(_,i)=>
     `<option value="${i+1}"${r.marcacao==i+1?' selected':''}>${i+1}</option>`).join('');
@@ -1103,6 +1100,7 @@ function buildCorRow(ci,fi){
     </td>
     <td><select onchange="onTipo(${ci},${fi},this.value)"><option value="">— selecionar —</option>${tiposOpts}</select></td>
     <td><select id="sc-${ci}-${fi}" onchange="S.cortes[${ci}].rows[${fi}].cor=this.value;rcRow(${ci},${fi})"><option value="">— selecionar —</option>${corsOpts}</select></td>
+    <td><select onchange="S.cortes[${ci}].rows[${fi}].ziper=this.value"><option value="">— sem zíper —</option>${zipOpts}</select></td>
     <td><input type="number" class="ifolhas" min="0" value="${r.folhas||''}" placeholder="0" oninput="S.cortes[${ci}].rows[${fi}].folhas=this.value;rcRow(${ci},${fi})"></td>`;
   vals.forEach((v,j)=>{h+=`<td class="tcalc" id="c-${ci}-${fi}-${j}">${v||'—'}</td>`;});
   h+=`<td class="ttotal" id="c-${ci}-${fi}-t">${rt||'—'}</td>
@@ -1285,8 +1283,7 @@ function catSave(data){
 const ZIP_KEY='provest_ziperes';
 let _ziperes=(()=>{try{return JSON.parse(localStorage.getItem(ZIP_KEY)||'[]');}catch(e){return[];}})();
 function renderZiperList(){
-  const dl=document.getElementById('ziper-list');
-  if(dl)dl.innerHTML=_ziperes.map(z=>`<option value="${esc(z)}"></option>`).join('');
+  if(typeof S!=='undefined'&&S&&S.grades&&document.getElementById('ctabs'))buildMon();
 }
 function ziperSave(lista){
   _ziperes=lista;localStorage.setItem(ZIP_KEY,JSON.stringify(lista));
@@ -1752,7 +1749,6 @@ function updateResOPCard(){
     {label:'Marca do Tecido',    val:S.marcaTecido||'—',   mono:false, hl:false},
     {label:'Largura do Tecido',  val:S.larguraTecido?(S.larguraTecido+' m'):'—', mono:true, hl:false},
     {label:'Largura Forro',      val:S.larguraForro?(S.larguraForro+' m'):'—',   mono:true, hl:false},
-    {label:'Zíper',              val:S.ziper||'Sem zíper', mono:false, hl:false},
   ];
 
   fieldsEl.innerHTML=fields.map(f=>
@@ -1790,7 +1786,7 @@ function renderResCorcorte(){
     for(let fi=0;fi<nRows;fi++){
       const r=S.cortes[ci].rows[fi];
       if(!r.tipo||!r.cor)continue;
-      const k=r.tipo+'||'+r.cor;
+      const k=r.tipo+'||'+r.cor+'||'+(r.ziper||'');
       if(!map[k])map[k]={};
       const cn=S.grades[ci].nome;
       if(!map[k][cn])map[k][cn]={folhas:0,kg:0,vals:sz.map(()=>0)};
@@ -1809,9 +1805,9 @@ function renderResCorcorte(){
   // Group by tipo
   const grouped={};
   Object.entries(map).forEach(([k,cortes])=>{
-    const [tipo,cor]=k.split('||');
+    const [tipo,cor,ziper]=k.split('||');
     if(!grouped[tipo])grouped[tipo]=[];
-    grouped[tipo].push({cor,cortes});
+    grouped[tipo].push({cor,ziper,cortes});
   });
 
   const grand={folhas:0,kg:0,vals:sz.map(()=>0)};
@@ -1822,7 +1818,7 @@ function renderResCorcorte(){
     trH.innerHTML=`<td colspan="${sz.length+7}" style="padding-left:12px">${esc(tipo)}</td>`;
     tb.appendChild(trH);
 
-    items.forEach(({cor,cortes})=>{
+    items.forEach(({cor,ziper,cortes})=>{
       // Cor sub-total across all cortes for this cor
       const corTot={folhas:0,kg:0,vals:sz.map(()=>0)};
 
@@ -1836,7 +1832,7 @@ function renderResCorcorte(){
         tr.style.background=idx%2===0?'var(--il)':'var(--wh)';
         const rowTotal=d.vals.reduce((a,b)=>a+b,0);
         let h=idx===0
-          ? `<td class="tl" style="color:var(--gr);padding-left:18px" rowspan="${Object.keys(cortes).length}">↳ ${esc(cor)}</td>`
+          ? `<td class="tl" style="color:var(--gr);padding-left:18px" rowspan="${Object.keys(cortes).length}">↳ ${esc(cor)}${ziper?`<div style="font-size:.68rem;color:var(--ts);font-weight:400;margin-top:2px">Zíper: ${esc(ziper)}</div>`:''}</td>`
           : '';
         h+=`<td style="font-family:var(--fm);font-size:.72rem;color:var(--ts)">${esc(corteName)}</td>`;
         h+=`<td style="font-family:var(--fm);font-size:.78rem;text-align:center">${d.folhas||'—'}</td>`;
