@@ -476,7 +476,7 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
         </div>
       </div>
       <!-- Row 4: Marca tecido + Largura tecido + Largura forro + Unidade -->
-      <div class="frow3" style="grid-template-columns:1fr 1fr 1fr auto;gap:12px;margin-bottom:12px;align-items:end">
+      <div class="frow3" style="grid-template-columns:1fr 1fr 1fr 1.4fr auto;gap:12px;margin-bottom:12px;align-items:end">
         <div class="fgroup">
           <span class="flabel">Marca do Tecido</span>
           <input type="text" class="ifield" id="f-marca-tecido" placeholder="Ex: Santanense">
@@ -488,6 +488,11 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
         <div class="fgroup">
           <span class="flabel">Largura Forro (m)</span>
           <input type="number" step="0.01" min="0" class="ifield" id="f-largura-forro" placeholder="Ex: 1.40" style="text-align:left">
+        </div>
+        <div class="fgroup">
+          <span class="flabel">Zíper <span style="opacity:.6">(opcional)</span></span>
+          <input type="text" class="ifield" id="f-ziper" list="ziper-list" placeholder="Sem zíper" autocomplete="off">
+          <datalist id="ziper-list"></datalist>
         </div>
         <div class="fgroup">
           <span class="flabel">Unidade</span>
@@ -886,6 +891,7 @@ function showDetail(data,el){
       <div><div class="detail-label">Marca do Tecido</div><div class="detail-val">${esc(data.marcaTecido||'—')}</div></div>
       <div><div class="detail-label">Largura Tecido</div><div class="detail-val" style="font-family:var(--fm)">${data.larguraTecido?data.larguraTecido+' m':'—'}</div></div>
       <div><div class="detail-label">Largura Forro</div><div class="detail-val" style="font-family:var(--fm)">${data.larguraForro?data.larguraForro+' m':'—'}</div></div>
+      <div><div class="detail-label">Zíper</div><div class="detail-val">${esc(data.ziper||'Sem zíper')}</div></div>
     </div>
     <div style="margin-bottom:10px">
       <div class="detail-label" style="margin-bottom:4px">Tamanhos</div>
@@ -932,7 +938,7 @@ function loadOP(id){
   }
   const fieldMap={cliente:'f-cliente',op:'f-op',ref:'f-ref',data:'f-data',desc:'f-desc',obs:'f-obs',
     entrega:'f-entrega',rendimento:'f-rendimento',cortador:'f-cortador',enfestador:'f-enfestador',
-    marcaTecido:'f-marca-tecido',larguraTecido:'f-largura-tecido',larguraForro:'f-largura-forro'};
+    marcaTecido:'f-marca-tecido',larguraTecido:'f-largura-tecido',larguraForro:'f-largura-forro',ziper:'f-ziper'};
   Object.entries(fieldMap).forEach(([k,id])=>{
     const el=document.getElementById(id);if(el)el.value=S[k]||'';
   });
@@ -952,10 +958,10 @@ function confirmDelete(id){
 function newOP(){
   S={
     id:uid(),cliente:'',op:'',ref:'',data:new Date().toISOString().slice(0,10),
-    desc:'',obs:'',entrega:'',rendimento:'',cortador:'',enfestador:'',marcaTecido:'',larguraTecido:'',larguraForro:'',unidade:'Metros',gradeType:1,
+    desc:'',obs:'',entrega:'',rendimento:'',cortador:'',enfestador:'',marcaTecido:'',larguraTecido:'',larguraForro:'',ziper:'',unidade:'Metros',gradeType:1,
     tecidos:[],grades:makeGrades(1),cortes:makeCortes(4),
   };
-  ['f-cliente','f-op','f-ref','f-desc','f-obs','f-entrega','f-rendimento','f-cortador','f-enfestador','f-marca-tecido','f-largura-tecido','f-largura-forro'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';}); S.unidade='Metros';
+  ['f-cliente','f-op','f-ref','f-desc','f-obs','f-entrega','f-rendimento','f-cortador','f-enfestador','f-marca-tecido','f-largura-tecido','f-largura-forro','f-ziper'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';}); S.unidade='Metros';
   document.getElementById('f-data').value=S.data;
   syncHeader();setGradeType(1,false);setUnidade('Metros');renderTec();renderGrades();buildMon();refreshCalcs();
   goTab('cad');toast('Nova OP criada. Preencha os dados e salve.');
@@ -973,6 +979,7 @@ function saveCurrentOP(){
   S.marcaTecido=document.getElementById('f-marca-tecido').value;
   S.larguraTecido=document.getElementById('f-largura-tecido').value;
   S.larguraForro=document.getElementById('f-largura-forro').value;
+  S.ziper=document.getElementById('f-ziper').value.trim();
   // unidade saved via setUnidade already in S.unidade
   if(lsSave(S)){renderDB();toast('OP salva: '+(S.cliente||'sem cliente')+' / OP '+(S.op||'—'));}
   else toast('Erro ao salvar.');
@@ -1275,21 +1282,38 @@ function catSave(data){
   catch(e){return false;}
 }
 
-async function sbCatLoad(){
+const ZIP_KEY='provest_ziperes';
+let _ziperes=(()=>{try{return JSON.parse(localStorage.getItem(ZIP_KEY)||'[]');}catch(e){return[];}})();
+function renderZiperList(){
+  const dl=document.getElementById('ziper-list');
+  if(dl)dl.innerHTML=_ziperes.map(z=>`<option value="${esc(z)}"></option>`).join('');
+}
+function ziperSave(lista){
+  _ziperes=lista;localStorage.setItem(ZIP_KEY,JSON.stringify(lista));
+  sbCatSave(lista,'ziperes');renderZiperList();
+}
+async function syncZiperesWithSupabase(){
+  const remote=await sbCatLoad('ziperes');
+  if(Array.isArray(remote)&&remote.length){_ziperes=remote;localStorage.setItem(ZIP_KEY,JSON.stringify(remote));}
+  else if(_ziperes.length)sbCatSave(_ziperes,'ziperes');
+  renderZiperList();
+}
+
+async function sbCatLoad(id='global'){
   try{
-    const r=await fetch(SB_URL+'/rest/v1/catalog?id=eq.global&select=data',{headers:sbAuthHeaders()});
+    const r=await fetch(SB_URL+'/rest/v1/catalog?id=eq.'+id+'&select=data',{headers:sbAuthHeaders()});
     if(!r.ok)return null;
     const rows=await r.json();
     return rows[0]?rows[0].data:null;
   }catch(e){return null;}
 }
 
-async function sbCatSave(data){
+async function sbCatSave(data,id='global'){
   try{
     await fetch(SB_URL+'/rest/v1/catalog?on_conflict=id',{
       method:'POST',
       headers:{...sbAuthHeaders(),'Prefer':'resolution=merge-duplicates'},
-      body:JSON.stringify({id:'global',data})
+      body:JSON.stringify({id,data})
     });
   }catch(e){console.error('Erro ao sincronizar catálogo:',e);}
 }
@@ -1599,14 +1623,22 @@ async function dapicSync(){
     // 2) Detalhe de cada produto (grupo + cores). Produtos que já sabemos não serem tecido e não mudaram são pulados.
     const cache=lsGetStore(DAPIC_CACHE_KEY,{});
     const ehTecido=c=>c&&((c.grupoId!=null&&gruposSel.has(c.grupoId))||(c.grupo&&nomesSel.has(catNorm(String(c.grupo).trim()))));
-    const aBuscar=ativos.filter(p=>{const c=cache[p.Id];return !c||c.mod!==(p.DataModificacao||'')||ehTecido(c);});
-    const tecidos=[];let feitos=0,semGrupo=0,exemplo=null;
+    const idsZiper=new Set(_dapicGrupos.filter(g=>/ZIPP?ER/.test(catNorm(g.Descricao))).map(g=>g.Id));
+    const ehZiper=c=>c&&((c.grupoId!=null&&idsZiper.has(c.grupoId))||(c.grupo&&/ZIPP?ER/.test(catNorm(String(c.grupo)))));
+    const aBuscar=ativos.filter(p=>{const c=cache[p.Id];return !c||c.mod!==(p.DataModificacao||'')||ehTecido(c)||ehZiper(c);});
+    const tecidos=[],ziperes=new Set();let feitos=0,semGrupo=0,exemplo=null;
     await dapicPool(aBuscar,4,async p=>{
       const det=await dapicGet('/v1/produtos/'+p.Id,{incluirFichaTecnica:'false'});
       const g=dapicAcharGrupo(det);
       if(g.id===null&&!g.nome){semGrupo++;if(!exemplo)exemplo=det;}
       cache[p.Id]={mod:p.DataModificacao||'',grupoId:g.id,grupo:g.nome};
-      if(ehTecido(cache[p.Id]))tecidos.push({p,det,grupo:g.nome||((_dapicGrupos.find(x=>x.Id===g.id)||{}).Descricao)||''});
+      if(ehZiper(cache[p.Id])){
+        const desc=(det.DescricaoFabrica||p.DescricaoFabrica||'').trim();
+        const grs=(det.GradesProdutos||det.Grades||[]).filter(gr=>_dapicCfg.inativas||!(gr.Desativada||gr.Desativado));
+        const cores=[...new Set(grs.map(gr=>dapicNomeCor(gr.Cor,det.Referencia||p.Referencia,desc)).filter(Boolean))];
+        if(cores.length)cores.forEach(c=>ziperes.add(desc+' - '+c));else if(desc)ziperes.add(desc);
+      }
+      else if(ehTecido(cache[p.Id]))tecidos.push({p,det,grupo:g.nome||((_dapicGrupos.find(x=>x.Id===g.id)||{}).Descricao)||''});
       feitos++;
       dapicProgresso(`Lendo produtos e cores… ${feitos} de ${aBuscar.length} · ${tecidos.length} tecido(s) encontrados`,0.15+0.8*feitos/aBuscar.length);
     });
@@ -1641,12 +1673,13 @@ async function dapicSync(){
     // 4) Substitui o catálogo (guardando o anterior)
     if(_cat.length)lsSet(CAT_BACKUP_KEY,{quando:Date.now(),catalog:_cat});
     _cat=lista;catSave(_cat);
+    if(ziperes.size)ziperSave([...ziperes].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})));
     lsSet(DAPIC_META_KEY,{quando:Date.now(),tipos:lista.length,cores:totCores,produtos:produtos.length});
     if(_catSelTipo&&!catFindTipo(_catSelTipo)){_catSelTipo=null;document.getElementById('cat-use-btn').style.display='none';document.getElementById('cat-cor-title').textContent='Selecione um tipo';document.getElementById('cat-cor-body').innerHTML='<div class="cat-empty">Selecione um tipo de tecido ao lado para ver suas cores.</div>';}
     renderCatTipos();if(_catSelTipo)renderCatCores();
     dapicProgresso(`Concluído: ${lista.length} tecido(s) e ${totCores} cor(es).`,1);
     setTimeout(()=>{document.getElementById('dapic-prog').style.display='none';},2500);
-    toast('Catálogo sincronizado: '+lista.length+' tecido(s).');
+    toast('Catálogo sincronizado: '+lista.length+' tecido(s), '+ziperes.size+' zíper(es).');
   }catch(e){
     document.getElementById('dapic-prog').style.display='none';
     renderDapicStatus('<strong style="color:var(--re)">Sincronização não concluída:</strong> '+(String(e.message).includes('<a ')?e.message:esc(e.message))+' O catálogo anterior foi mantido.',true);
@@ -1719,6 +1752,7 @@ function updateResOPCard(){
     {label:'Marca do Tecido',    val:S.marcaTecido||'—',   mono:false, hl:false},
     {label:'Largura do Tecido',  val:S.larguraTecido?(S.larguraTecido+' m'):'—', mono:true, hl:false},
     {label:'Largura Forro',      val:S.larguraForro?(S.larguraForro+' m'):'—',   mono:true, hl:false},
+    {label:'Zíper',              val:S.ziper||'Sem zíper', mono:false, hl:false},
   ];
 
   fieldsEl.innerHTML=fields.map(f=>
@@ -1897,7 +1931,7 @@ function init(){
   renderTec();renderGrades();buildMon();refreshCalcs();renderDB();
   renderCatTipos();
   syncWithSupabase();
-  syncCatalogWithSupabase();
+  syncCatalogWithSupabase();renderZiperList();syncZiperesWithSupabase();
   startRealtime();
 }
 
