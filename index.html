@@ -286,6 +286,13 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
   body.print-mon table{width:100%;table-layout:auto;page-break-inside:auto}
   body.print-mon tr{page-break-inside:avoid}
   body.print-mon tr.mon-vazia{display:none!important}
+  body.print-mon #panel-res,body.print-mon #panel-db,body.print-mon #panel-cad,body.print-mon #panel-cat{display:none!important}
+  body.print-mon input[type=number]{-moz-appearance:textfield}
+  body.print-mon input::-webkit-inner-spin-button,body.print-mon input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+  body.print-mon .cpanel.on{zoom:var(--zl,1)}
+}
+@media print and (orientation:portrait){
+  body.print-mon .cpanel.on{zoom:var(--zp,1)}
 }
 </style>
 </head>
@@ -1066,6 +1073,11 @@ function printMontagem(){
     const sels=tr.querySelectorAll('select');
     if(sels.length>=3&&!sels[1].value&&!sels[2].value)tr.classList.add('mon-vazia');
   });
+  document.querySelectorAll('.cpanel.on tbody tr').forEach(tr=>{if(tr.querySelector('button')&&!tr.querySelector('select'))tr.classList.add('mon-vazia');});
+  const tbl=document.querySelector('.cpanel.on table');
+  const w=tbl?tbl.scrollWidth+4:1;
+  document.body.style.setProperty('--zl',Math.min(1,1040/w).toFixed(3));
+  document.body.style.setProperty('--zp',Math.min(1,710/w).toFixed(3));
   document.body.classList.add('print-mon');
   const st=document.createElement('style');
   st.id='_mon_page';st.textContent='@page{size:A4 landscape;margin:1cm}';
