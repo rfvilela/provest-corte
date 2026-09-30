@@ -262,6 +262,31 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
 .login-subtitle{font-family:var(--fb);font-size:.78rem;color:var(--ts);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
 .login-card .fgroup{text-align:left}
 .login-error{font-family:var(--fb);font-size:.74rem;color:var(--re);margin-top:10px;min-height:1px}
+@media print{
+  body.print-mon{background:#fff!important}
+  body.print-mon #login-screen,body.print-mon .nav,body.print-mon #toast{display:none!important}
+  body.print-mon .topbar{display:flex!important;position:static!important;background:#0f1c2e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon .topbar-right{display:none!important}
+  body.print-mon .app{min-height:0!important;height:auto!important}
+  body.print-mon .main{padding:0!important;background:#fff!important}
+  body.print-mon .panel{display:none!important}
+  body.print-mon #panel-mon{display:block!important;padding:0;animation:none!important}
+  body.print-mon .sh .ml{display:none!important}
+  body.print-mon .sh{margin:8pt 0}
+  body.print-mon .ctabs{display:none!important}
+  body.print-mon .cpanel{display:none!important}
+  body.print-mon .cpanel.on{display:block!important}
+  body.print-mon button{display:none!important}
+  body.print-mon .card{box-shadow:none!important;border:1px solid #c8d5e3!important;border-radius:0!important;page-break-inside:auto}
+  body.print-mon .ch{background:#0f1c2e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon thead th{background:#1a2f4a!important;color:#fff!important;font-size:7pt;padding:3pt 4pt;min-width:0!important;white-space:nowrap;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.print-mon tbody td{padding:3pt 4pt;font-size:7pt;min-width:0!important;color:#0f1c2e}
+  body.print-mon select,body.print-mon input{border:none!important;background:transparent!important;font-size:7pt;padding:0!important;width:auto!important;max-width:none!important;-webkit-appearance:none!important;appearance:none!important;color:#0f1c2e!important;box-shadow:none!important}
+  body.print-mon .tw{overflow:visible!important}
+  body.print-mon table{width:100%;table-layout:auto;page-break-inside:auto}
+  body.print-mon tr{page-break-inside:avoid}
+  body.print-mon tr.mon-vazia{display:none!important}
+}
 </style>
 </head>
 <body>
@@ -542,6 +567,8 @@ textarea{resize:vertical;min-height:72px;font-family:var(--fb);font-size:.8rem;l
     <div class="ml">
       <span class="chip-grade" id="chip-grade-type">Tipo 1</span>
       <span class="chip cha" id="chip-total">0 peças</span>
+      <button class="btn bp bsm" onclick="saveCurrentOP()">💾 Salvar OP</button>
+      <button class="btn bg bsm" onclick="printMontagem()">🖨 Imprimir Montagem</button>
     </div>
   </div>
   <div class="ctabs" id="ctabs"></div>
@@ -1034,6 +1061,17 @@ function buildMon(){
     div.innerHTML=buildCTable(ci);panels.appendChild(div);
   });
 }
+function printMontagem(){
+  document.querySelectorAll('.cpanel.on tbody tr').forEach(tr=>{
+    const sels=tr.querySelectorAll('select');
+    if(sels.length>=3&&!sels[1].value&&!sels[2].value)tr.classList.add('mon-vazia');
+  });
+  document.body.classList.add('print-mon');
+  const st=document.createElement('style');
+  st.id='_mon_page';st.textContent='@page{size:A4 landscape;margin:1cm}';
+  document.head.appendChild(st);
+  setTimeout(()=>{window.print();document.body.classList.remove('print-mon');document.getElementById('_mon_page').remove();document.querySelectorAll('.mon-vazia').forEach(t=>t.classList.remove('mon-vazia'));},120);
+}
 function showCTab(ci){
   document.querySelectorAll('.ctab').forEach((b,i)=>b.classList.toggle('on',i===ci));
   document.querySelectorAll('.cpanel').forEach((p,i)=>p.classList.toggle('on',i===ci));
@@ -1089,7 +1127,7 @@ function buildCorRow(ci,fi){
   const zl=_ziperes.slice();if(r.ziper&&!zl.includes(r.ziper))zl.unshift(r.ziper);
   const zipOpts=zl.map(z=>`<option value="${esc(z)}"${r.ziper===z?' selected':''}>${esc(z)}</option>`).join('');
   const vals=calcRow(ci,fi);const rt=vals.reduce((a,b)=>a+b,0);
-  const marcOpts=Array.from({length:20},(_,i)=>
+  const marcOpts=Array.from({length:99},(_,i)=>
     `<option value="${i+1}"${r.marcacao==i+1?' selected':''}>${i+1}</option>`).join('');
   let h=`<tr>
     <td style="width:54px;padding:4px 6px">
