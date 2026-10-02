@@ -869,13 +869,19 @@ function goTab(name){
     document.getElementById('panel-'+t).classList.toggle('on',t===name);
     document.querySelectorAll('.ntab')[i].classList.toggle('on',t===name);
   });
-  if(name==='res'){renderRes();}
+  if(name==='res'){syncFieldsToS();renderRes();}
   updateMeta();
 }
 
 // ── PRINT ──────────────────────────────────────────────────────
+function syncFieldsToS(){
+  ['desc:f-desc','obs:f-obs','entrega:f-entrega','rendimento:f-rendimento','cortador:f-cortador','enfestador:f-enfestador',
+   'marcaTecido:f-marca-tecido','larguraTecido:f-largura-tecido','larguraForro:f-largura-forro'].forEach(x=>{
+    const [k,id]=x.split(':');const e=document.getElementById(id);if(e)S[k]=e.value;
+  });
+}
 function printResumo(){
-  renderRes();
+  syncFieldsToS();renderRes();
   setTimeout(()=>window.print(),120);
 }
 
