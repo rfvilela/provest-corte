@@ -870,6 +870,7 @@ function goTab(name){
     document.querySelectorAll('.ntab')[i].classList.toggle('on',t===name);
   });
   if(name==='res'){syncFieldsToS();renderRes();}
+  if(name==='mon')ziperesAutoLoad();
   updateMeta();
 }
 
@@ -1369,6 +1370,43 @@ function ziperSave(lista){
   _ziperes=lista;localStorage.setItem(ZIP_KEY,JSON.stringify(lista));
   sbCatSave(lista,'ziperes');renderZiperList();
 }
+
+function ziperLabels(det,p){
+  const desc=(det.DescricaoFabrica||(p&&p.DescricaoFabrica)||'').trim();
+  const ref=det.Referencia||(p&&p.Referencia);
+  const grs=(det.GradesProdutos||det.Grades||[]).filter(gr=>_dapicCfg.inativas||!(gr.Desativada||gr.Desativado));
+  const out=new Set();
+  grs.forEach(gr=>{
+    const cor=dapicNomeCor(gr.Cor,ref,desc);
+    const tam=String(gr.Tamanho||'').trim();
+    out.add(desc+(tam&&tam.toUpperCase()!=='UN'&&tam.toUpperCase()!=='U'?' '+tam+'cm':'')+(cor?' - '+cor:''));
+  });
+  if(!out.size&&desc)out.add(desc);
+  return [...out];
+}
+let _zipBusy=false;
+async function dapicSyncZiperes(silencioso){
+  if(_zipBusy||!_dapicCfg.url||!_dapicCfg.key)return;
+  _zipBusy=true;
+  try{
+    const prods=await dapicListAll('/v1/produtos');
+    const cand=prods.filter(p=>/ZIPP?ER/.test(catNorm(p.DescricaoFabrica||''))&&String(p.TipoProduto)!=='1'&&(!p.Status||catNorm(p.Status)==='ATIVO'));
+    const lista=new Set();
+    for(const p of cand){
+      const det=await dapicGet('/v1/produtos/'+p.Id,{incluirFichaTecnica:'false'});
+      const g=dapicAcharGrupo(det);
+      if(g.id===2||/ZIPP?ER/.test(catNorm(g.nome||'')))ziperLabels(det,p).forEach(z=>lista.add(z));
+    }
+    localStorage.setItem('provest_ziperes_at',String(Date.now()));
+    if(lista.size){ziperSave([...lista].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})));if(!silencioso)toast(lista.size+' zíper(es) carregados do Dapic.');}
+    else if(!silencioso)toast('Nenhum zíper encontrado no Dapic.');
+  }catch(e){if(!silencioso)toast('Falha ao carregar zíperes: '+e.message);}
+  finally{_zipBusy=false;}
+}
+function ziperesAutoLoad(){
+  const at=Number(localStorage.getItem('provest_ziperes_at')||0);
+  if(!_ziperes.length||Date.now()-at>86400000)dapicSyncZiperes(true);
+}
 async function syncZiperesWithSupabase(){
   const remote=await sbCatLoad('ziperes');
   if(Array.isArray(remote)&&remote.length){_ziperes=remote;localStorage.setItem(ZIP_KEY,JSON.stringify(remote));}
@@ -1710,10 +1748,7 @@ async function dapicSync(){
       if(g.id===null&&!g.nome){semGrupo++;if(!exemplo)exemplo=det;}
       cache[p.Id]={mod:p.DataModificacao||'',grupoId:g.id,grupo:g.nome};
       if(ehZiper(cache[p.Id])){
-        const desc=(det.DescricaoFabrica||p.DescricaoFabrica||'').trim();
-        const grs=(det.GradesProdutos||det.Grades||[]).filter(gr=>_dapicCfg.inativas||!(gr.Desativada||gr.Desativado));
-        const cores=[...new Set(grs.map(gr=>dapicNomeCor(gr.Cor,det.Referencia||p.Referencia,desc)).filter(Boolean))];
-        if(cores.length)cores.forEach(c=>ziperes.add(desc+' - '+c));else if(desc)ziperes.add(desc);
+        ziperLabels(det,p).forEach(z=>ziperes.add(z));
       }
       else if(ehTecido(cache[p.Id]))tecidos.push({p,det,grupo:g.nome||((_dapicGrupos.find(x=>x.Id===g.id)||{}).Descricao)||''});
       feitos++;
@@ -1750,6 +1785,7 @@ async function dapicSync(){
     // 4) Substitui o catálogo (guardando o anterior)
     if(_cat.length)lsSet(CAT_BACKUP_KEY,{quando:Date.now(),catalog:_cat});
     _cat=lista;catSave(_cat);
+    if(ziperes.size)localStorage.setItem('provest_ziperes_at',String(Date.now()));
     if(ziperes.size)ziperSave([...ziperes].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})));
     lsSet(DAPIC_META_KEY,{quando:Date.now(),tipos:lista.length,cores:totCores,produtos:produtos.length});
     if(_catSelTipo&&!catFindTipo(_catSelTipo)){_catSelTipo=null;document.getElementById('cat-use-btn').style.display='none';document.getElementById('cat-cor-title').textContent='Selecione um tipo';document.getElementById('cat-cor-body').innerHTML='<div class="cat-empty">Selecione um tipo de tecido ao lado para ver suas cores.</div>';}
