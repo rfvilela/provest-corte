@@ -1166,8 +1166,6 @@ function buildCorRow(ci,fi){
   const tiposOpts=tipos().map(t=>`<option value="${esc(t)}"${r.tipo===t?' selected':''}>${esc(t)}</option>`).join('');
   const corsOpts=(r.tipo?coresDe(r.tipo):S.tecidos.map(t=>t.cor))
     .map(c=>`<option value="${esc(c)}"${r.cor===c?' selected':''}>${esc(c)}</option>`).join('');
-  const zl=_ziperes.slice();if(r.ziper&&!zl.includes(r.ziper))zl.unshift(r.ziper);
-  const zipOpts=zl.map(z=>`<option value="${esc(z)}"${r.ziper===z?' selected':''}>${esc(z)}</option>`).join('');
   const vals=calcRow(ci,fi);const rt=vals.reduce((a,b)=>a+b,0);
   const marcOpts=Array.from({length:99},(_,i)=>
     `<option value="${i+1}"${r.marcacao==i+1?' selected':''}>${i+1}</option>`).join('');
@@ -1180,7 +1178,7 @@ function buildCorRow(ci,fi){
     </td>
     <td><select onchange="onTipo(${ci},${fi},this.value)"><option value="">— selecionar —</option>${tiposOpts}</select></td>
     <td><select id="sc-${ci}-${fi}" onchange="S.cortes[${ci}].rows[${fi}].cor=this.value;rcRow(${ci},${fi})"><option value="">— selecionar —</option>${corsOpts}</select></td>
-    <td><select onchange="S.cortes[${ci}].rows[${fi}].ziper=this.value"><option value="">— sem zíper —</option>${zipOpts}</select></td>
+    <td><input type="text" class="iziper" list="ziper-dl" value="${esc(r.ziper||'')}" placeholder="sem zíper" autocomplete="off" title="${esc(r.ziper||'')}" style="width:100%;min-width:150px;font-size:.72rem" oninput="S.cortes[${ci}].rows[${fi}].ziper=this.value.trim();this.title=this.value"></td>
     <td><input type="number" class="ifolhas" min="0" value="${r.folhas||''}" placeholder="0" oninput="S.cortes[${ci}].rows[${fi}].folhas=this.value;rcRow(${ci},${fi})"></td>`;
   vals.forEach((v,j)=>{h+=`<td class="tcalc" id="c-${ci}-${fi}-${j}">${v||'—'}</td>`;});
   h+=`<td class="ttotal" id="c-${ci}-${fi}-t">${rt||'—'}</td>
@@ -1364,7 +1362,9 @@ function catSave(data){
 const ZIP_KEY='provest_ziperes';
 let _ziperes=(()=>{try{return JSON.parse(localStorage.getItem(ZIP_KEY)||'[]');}catch(e){return[];}})();
 function renderZiperList(){
-  if(typeof S!=='undefined'&&S&&S.grades&&document.getElementById('ctabs'))buildMon();
+  let dl=document.getElementById('ziper-dl');
+  if(!dl){dl=document.createElement('datalist');dl.id='ziper-dl';document.body.appendChild(dl);}
+  dl.innerHTML=_ziperes.map(z=>`<option value="${esc(z)}"></option>`).join('');
 }
 function ziperSave(lista){
   _ziperes=lista;localStorage.setItem(ZIP_KEY,JSON.stringify(lista));
